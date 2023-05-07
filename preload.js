@@ -11,6 +11,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("electronApi", {
   updateView: (store) => ipcRenderer.send("update-view", store),
   takePhoto: () => ipcRenderer.send("take-photo"),
+  startCountdown: () => ipcRenderer.send("start-countdown"),
 });
 
 const updateCurrentView = (_, store) => {
@@ -51,6 +52,24 @@ const savePhoto = () => {
   // TODO: Do something with the photo url data
 };
 
+const startCountdown = () => {
+  console.log("Countdown started!");
+  let secs = 3;
+  const countdownElement = document.getElementById("countdown");
+
+  if (!countdownElement) return;
+
+  const interval = setInterval(() => {
+    countdownElement.innerText = secs;
+    countdownElement.classList.add("show");
+    secs--;
+    if (secs < 0) {
+      clearInterval(interval);
+      countdownElement.classList.remove("show");
+    }
+  }, 1000);
+};
+
 window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector);
@@ -63,4 +82,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
   ipcRenderer.on("update-view", updateCurrentView);
   ipcRenderer.on("take-photo", savePhoto);
+  ipcRenderer.on("start-countdown", startCountdown);
 });

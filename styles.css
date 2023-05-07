@@ -28,10 +28,17 @@ body, html{
 .webcamViewContainer{
     border-radius: 4%;
     overflow: hidden;
+    position: relative;
+    height: 357px;
 }
 #webcam-view{
     width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* z-index: -1; */
 }
+
 .boothView{
     display: none;
 }
@@ -61,7 +68,7 @@ body, html{
     width: 100%;
     margin-bottom: 20px;
 }
-.onsorView__btnContainer button, #user-info-form input{
+.btn, #user-info-form input{
     padding: 12px;
     font-size: 18px;
     background-color: #ffffff;
@@ -71,4 +78,34 @@ body, html{
 
 .onsorView__btnContainer{
     margin-top: 30px;
+}
+.btn:hover{
+    cursor: pointer;
+}
+
+#capture-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+#to-questions-btn{
+    width: 150px;
+}
+
+#countdown-container{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #33333322;
+}
+
+#countdown-container.show{
+    display: block;
 }

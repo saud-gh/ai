@@ -66,6 +66,10 @@ app.whenReady().then(() => {
   ipcMain.on("take-photo", () => {
     mainWindow.webContents.send("take-photo");
   });
+  ipcMain.on("start-countdown", () => {
+    mainWindow.webContents.send("start-countdown");
+  });
+
   createWindow();
 
   app.on("activate", function () {

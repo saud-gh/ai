@@ -2,6 +2,9 @@ const nextBtn = document.getElementById("next-btn");
 const photoBtn = document.getElementById("photo-btn");
 const homeBtn = document.getElementById("home-btn");
 
+const captureBtn = document.getElementById("capture-btn");
+const toQuestionsBtn = document.getElementById("to-questions-btn");
+
 const userInfoForm = document.getElementById("user-info-form");
 
 const maxViews = 12;
@@ -38,6 +41,12 @@ userInfoForm.onsubmit = (e) => {
   window.electronApi.updateView(store);
   showView(store.currentView);
 };
+
+captureBtn.addEventListener("click", () => {
+  // TODO: Send event to booth screen to start timer
+  window.electronApi.startCountdown();
+  // TODO: Disable buttons while waiting for timer to end
+});
 
 // TODO: Set form inputs to empty after experience ends
 
