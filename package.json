@@ -1,0 +1,15 @@
+{
+  "name": "ai-experience",
+  "version": "1.0.0",
+  "description": "Comex AI Experience",
+  "main": "main.js",
+  "author": "Onsor Technologies",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^24.2.0",
+    "electron-reloader": "^1.2.3"
+  }
+}

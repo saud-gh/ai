@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; 
+          script-src 'self'; 
+          font-src 'self' https://fonts.gstatic.com;
+          style-src 'self' https://fonts.googleapis.com"
+    />
+    <!-- <link
+      href="https://fonts.googleapis.com/css?family=Tajawal&display=swap"
+      rel="stylesheet"
+    /> -->
+    <link href="./styles.css" rel="stylesheet" />
+    <title>Onsor Screen</title>
+  </head>
+  <body>
+    <!-- <h1>Onsor Window</h1> -->
+    <div id="onsor-views-container" class="viewsContainer">
+      <!-- <div>
+        <button id="next-btn">Next</button>
+        <button id="photo-btn">Take Photo</button>
+        <button id="home-btn">Home</button>
+      </div> -->
+      <div class="onsorView show" data-view="1">
+        <div class="onsorView__content">
+          <form id="user-info-form">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value="Saud"
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value="Al Alawi"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="E-mail"
+              value="saud.alawi@onsor.com"
+              required
+            />
+            <div class="onsorView__btnContainer">
+              <button type="submit">زر الانتقال</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="onsorView" data-view="2">
+        <h3>View 2</h3>
+      </div>
+      <div class="onsorView" data-view="3">
+        <h3>View 3</h3>
+      </div>
+    </div>
+    <!-- You can also require other files to run in this process -->
+    <script type="module" src="./onsor-screen.js"></script>
+  </body>
+</html>

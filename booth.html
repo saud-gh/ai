@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com"
+    /> -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; 
+          script-src 'self'; 
+          font-src 'self' https://fonts.gstatic.com;
+          style-src 'self' https://fonts.googleapis.com"
+    />
+    <!-- <link
+      href="https://fonts.googleapis.com/css?family=Tajawal&display=swap"
+      rel="stylesheet"
+    /> -->
+    <link href="./styles.css" rel="stylesheet" />
+    <title>Booth Window</title>
+  </head>
+  <body>
+    <template id="question-view-template"></template>
+    <!-- <h1>Booth Screen</h1> -->
+    <div id="booth-views-container" class="viewsContainer">
+      <div class="boothView show" data-view="1">
+        <h2 class="arabic-text">
+          اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
+        </h2>
+        <h2>Discover Beyond Your Imagination & Reality</h2>
+        <div class="arabic-text">
+          <p>يرجى الانتباه قبل البدء وقراءة خطوات إجراء التجربة:</p>
+          <ul>
+            <li>التجربة قائمة على إلتقاط صورة شخصية لك.</li>
+            <li>ستمر بعدد من الأسئلة التي تمس شخصيتك.</li>
+            <li>
+              النتيجة ستخرج لك مطبوعة بعد استخدام مزيج من خوارزميات الذكاء
+              الاصطناعي في معالجة النصوص وتوليد الصور كتذكار.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p>
+            Please pay attention before starting, and read the steps to conduct
+            the experiment:
+          </p>
+          <ul>
+            <li>The experiment is based on taking a personal photo.</li>
+            <li>
+              You'll go through a set of questions related to your personality.
+            </li>
+            <li>
+              The result will be printed as a souvenir after using a combination
+              of AI algorithms in text processing and image generation.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="boothView" data-view="2">
+        <h2 class="arabic-text">
+          اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
+        </h2>
+        <h2>Discover Beyond Your Imagination & Reality</h2>
+        <div class="webcamViewContainer">
+          <video id="webcam-view"></video>
+        </div>
+      </div>
+    </div>
+    <!--<canvas id="photo-canvas"></canvas> -->
+    <!-- You can also require other files to run in this process -->
+    <script src="./booth-screen.js"></script>
+  </body>
+</html>
