@@ -22,7 +22,15 @@
     <title>Booth Window</title>
   </head>
   <body>
-    <template id="question-view-template"></template>
+    <template id="question-view-template">
+      <div class="boothView">
+        <div class="boothView__content">
+          <h2 class="question arabic-text"></h2>
+          <h2 class="question english-text"></h2>
+          <ol class="answers"></ol>
+        </div>
+      </div>
+    </template>
     <!-- <h1>Booth Screen</h1> -->
     <div id="booth-views-container" class="viewsContainer">
       <div class="boothView show" data-view="1">
@@ -64,13 +72,13 @@
         </h2>
         <h2>Discover Beyond Your Imagination & Reality</h2>
         <div class="webcamViewContainer">
-          <video id="webcam-view"></video>
           <div id="countdown"></div>
+          <video id="webcam-view"></video>
         </div>
       </div>
     </div>
     <!--<canvas id="photo-canvas"></canvas> -->
     <!-- You can also require other files to run in this process -->
-    <script src="./booth-screen.js"></script>
+    <script type="module" src="./booth-screen.js"></script>
   </body>
 </html>

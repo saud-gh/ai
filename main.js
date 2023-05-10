@@ -18,7 +18,9 @@ function createWindow() {
     width: width / 2,
     height: height,
     webPreferences: {
+      // TODO: Change the preload file
       preload: path.join(__dirname, "preload.js"),
+      sandbox: false,
     },
     x: 0,
     y: 0,
@@ -30,7 +32,9 @@ function createWindow() {
     width: width / 2,
     height: height,
     webPreferences: {
+      // TODO: Change the preload file
       preload: path.join(__dirname, "preload.js"),
+      sandbox: false,
     },
     x: width / 2,
     y: 0,

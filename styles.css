@@ -26,17 +26,17 @@ body, html{
 /* Booth Screen Styles */
 
 .webcamViewContainer{
-    border-radius: 4%;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
-    height: 357px;
+    min-height: 357px;
 }
 #webcam-view{
     width: 100%;
+    border-radius: 4%;
     position: absolute;
     top: 0;
     left: 0;
-    /* z-index: -1; */
+    z-index: 10;
 }
 
 .boothView{
@@ -47,6 +47,13 @@ body, html{
     display: block;
 }
 
+.answer button{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #333333;
+    width: 100%;
+}
 
 /* Onsor Screen Styles */
 .onsorView{
@@ -104,6 +111,7 @@ body, html{
     top: 0;
     left: 0;
     background-color: #33333322;
+    z-index: 100;
 }
 
 #countdown-container.show{

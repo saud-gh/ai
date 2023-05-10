@@ -6,12 +6,15 @@
  * https://www.electronjs.org/docs/latest/tutorial/sandbox
  */
 const { contextBridge, ipcRenderer } = require("electron");
+
+const { questions } = require("./constants");
 // const Slider = require("./src/Slider.js");
 
 contextBridge.exposeInMainWorld("electronApi", {
   updateView: (store) => ipcRenderer.send("update-view", store),
   takePhoto: () => ipcRenderer.send("take-photo"),
   startCountdown: () => ipcRenderer.send("start-countdown"),
+  Questions: questions,
 });
 
 const updateCurrentView = (_, store) => {

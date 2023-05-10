@@ -12,12 +12,6 @@ const maxViews = 12;
 const store = {
   currentView: 1,
   currentQuestion: null,
-  questions: [
-    {
-      text: "",
-      answer: "",
-    },
-  ],
 };
 
 const showView = (viewNum) => {
@@ -46,6 +40,13 @@ captureBtn.addEventListener("click", () => {
   // TODO: Send event to booth screen to start timer
   window.electronApi.startCountdown();
   // TODO: Disable buttons while waiting for timer to end
+});
+
+toQuestionsBtn.addEventListener("click", () => {
+  store.currentView = 3;
+
+  window.electronApi.updateView(store);
+  showView(store.currentView);
 });
 
 // TODO: Set form inputs to empty after experience ends
