@@ -12,7 +12,9 @@
       content="default-src 'self'; 
           script-src 'self'; 
           font-src 'self' https://fonts.gstatic.com;
-          style-src 'self' https://fonts.googleapis.com"
+          style-src 'self' https://fonts.googleapis.com;
+          img-src 'self' data:;
+          connect-src 'self' http://192.168.1.180:5000;"
     />
     <!-- <link
       href="https://fonts.googleapis.com/css?family=Tajawal&display=swap"
@@ -24,21 +26,30 @@
   <body>
     <template id="question-view-template">
       <div class="boothView">
-        <div class="boothView__content">
-          <h2 class="question arabic-text"></h2>
-          <h2 class="question english-text"></h2>
-          <ol class="answers"></ol>
+        <!-- <div class="boothView__content"> -->
+        <div class="questionNumber">
+          <div class="questionNumber__english"></div>
+          <div class="questionNumber__arabic arabic-text"></div>
+        </div>
+        <div class="question">
+          <h2 class="question__text arabic-text"></h2>
+          <h2 class="question__text english-text"></h2>
+          <ol class="question__answers"></ol>
         </div>
       </div>
+      <!-- </div> -->
     </template>
     <!-- <h1>Booth Screen</h1> -->
     <div id="booth-views-container" class="viewsContainer">
       <div class="boothView show" data-view="1">
-        <h2 class="arabic-text">
-          اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
-        </h2>
-        <h2>Discover Beyond Your Imagination & Reality</h2>
-        <div class="arabic-text">
+        <!-- <div class="boothView__content"> -->
+        <div class="headings">
+          <h2 class="arabic-text heading">
+            اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
+          </h2>
+          <h2 class="heading">Discover Beyond Your Imagination & Reality</h2>
+        </div>
+        <div class="arabic-text instructions instructions--arabic">
           <p>يرجى الانتباه قبل البدء وقراءة خطوات إجراء التجربة:</p>
           <ul>
             <li>التجربة قائمة على إلتقاط صورة شخصية لك.</li>
@@ -49,7 +60,7 @@
             </li>
           </ul>
         </div>
-        <div>
+        <div class="instructions instructions--english">
           <p>
             Please pay attention before starting, and read the steps to conduct
             the experiment:
@@ -65,19 +76,49 @@
             </li>
           </ul>
         </div>
+        <!-- </div> -->
       </div>
       <div class="boothView" data-view="2">
-        <h2 class="arabic-text">
-          اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
-        </h2>
-        <h2>Discover Beyond Your Imagination & Reality</h2>
+        <div class="headings">
+          <h2 class="arabic-text heading">
+            اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
+          </h2>
+          <h2 class="heading">Discover Beyond Your Imagination & Reality</h2>
+        </div>
         <div class="webcamViewContainer">
-          <div id="countdown"></div>
-          <video id="webcam-view"></video>
+          <!--TODO: Remove 'show' class-->
+          <div id="countdown" class="show"></div>
+          <video id="webcam-view" class="show"></video>
+          <canvas id="photo-canvas"></canvas>
+          <div id="flash-overlay"></div>
+        </div>
+      </div>
+      <div id="onsor-last-view" class="boothView">
+        <div class="headings">
+          <h2 class="arabic-text heading">
+            نرجو بأنك حظيت بتجربة ممتعة مكنتك من تخيل شكلك بصورة أبعد من الواقع.
+          </h2>
+          <h2 class="heading">
+            Onsor hope you had an enjoyable experience that blew your
+            imagination beyond the reality.
+          </h2>
+        </div>
+        <div class="generatedPhoto">
+          <img
+            id="generated-photo"
+            class="generatedPhoto__img"
+            alt="Generated Photo"
+          />
+        </div>
+        <div class="originalPhoto">
+          <img
+            id="original-photo"
+            class="originalPhoto__img"
+            alt="Original Photo"
+          />
         </div>
       </div>
     </div>
-    <!--<canvas id="photo-canvas"></canvas> -->
     <!-- You can also require other files to run in this process -->
     <script type="module" src="./booth-screen.js"></script>
   </body>

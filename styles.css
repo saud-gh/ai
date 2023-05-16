@@ -4,7 +4,7 @@
 body, html{
     margin: 0;
     color: #ffffff;
-    background-color: #333333;
+    background-color: #000109;
     height: 100%;
 }
 
@@ -19,51 +19,187 @@ body, html{
 
 .viewsContainer{
     margin: 0 auto;
-    max-width: 500px;
-    height: 100%
+    height: 100%;
+    overflow: hidden;
+    max-width: 880px;
+}
+
+.heading{
+    font-size: 44px;
 }
 
 /* Booth Screen Styles */
-
-.webcamViewContainer{
-    /* overflow: hidden; */
-    position: relative;
-    min-height: 357px;
-}
-#webcam-view{
-    width: 100%;
-    border-radius: 4%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
 .boothView{
     display: none;
+    height: 100%;
 }
 
 .boothView.show{
     display: block;
 }
 
-.answer button{
+.instructions{
+    font-size: 34px;
+}
+
+.headings{
+    margin: 250px 0;
+    /* margin-top: 250px; */
+}
+.headings .arabic-text,
+.question .question__text.arabic-text{
+    margin-bottom: 68px;
+}
+
+.instructions--arabic{
+    margin-bottom: 250px;
+}
+
+.webcamViewContainer{
+    /* overflow: hidden; */
+    position: relative;
+    height: 660px;
+    margin-top: 120px;
+}
+#webcam-view{
+    display: none;
+    width: 100%;
+    border-radius: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+#webcam-view.show{
+    display: block;
+}
+
+#countdown{
+    display: none;
+    width: 120px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #00010922;
+    z-index: 100;
+    font-size: 100px;
+    font-weight: bold;
+    border-top-left-radius: 25px;
+    text-align: center;
+}
+
+#countdown.show{
+    display: block;
+}
+
+#flash-overlay{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+
+#flash-overlay.shutter {
+    display: block;
+    animation: CameraFlash .3s .3s alternate-reverse 1;
+}
+@keyframes CameraFlash {
+    from {box-shadow: 0;}
+    to {box-shadow: inset 0 0 0 300px #fff;}
+}
+
+#photo-canvas{
+    display: none;
+    border-radius: 25px;
+}
+
+#photo-canvas.show{
+    display: block;
+}
+
+.question{
+    margin-top: 200px;
+}
+
+.questionNumber{
+    font-size: 48px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-    color: #333333;
+    margin-top: 18px;
+}
+
+.question__text{
+    font-size: 48px;
+    margin: 18px 0;
+}
+.question__answers{
+    margin-top: 300px;
+}
+.answer{
+    font-size: 36px;
+}
+.answer > div{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 64px;
+    color: #000109;
     width: 100%;
+    font-size: 36px;
+}
+
+.generatedPhoto{
+    display: flex;
+    justify-content: center;
+    /* margin-top: 30px; */
+}
+
+#generated-photo{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* height: 600px; TODO: Change to auto once photo generation is ready */
+    /* width: 100%; */
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #ffffff;
+    color: #000109;
+    text-align: center;
+    border: none;
+    border-radius: 24px;
+    font-size: 36px;
+}
+
+.originalPhoto{
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.originalPhoto__img{
+    width: 40%;
+    border-radius: 24px;
 }
 
 /* Onsor Screen Styles */
+
+/* TODO: Animation for changing between views */
 .onsorView{
     display: none;
     height: 100%;
+}
+.onsorView__content{
+    height: 100%;
+    display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 .onsorView.show{
-    display: flex;
+    display: block;
 }
 
 .onsorView__btnContainer{
@@ -73,14 +209,14 @@ body, html{
 
 #user-info-form input{
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
-.btn, #user-info-form input{
-    padding: 12px;
-    font-size: 18px;
+.btn, #user-info-form input, .answer__container{
+    padding: 20px;
+    font-size: 36px;
     background-color: #ffffff;
     border: none;
-    border-radius: 10px;
+    border-radius: 18px;
 }
 
 .onsorView__btnContainer{
@@ -94,26 +230,63 @@ body, html{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px;
-    width: 150px;
-    margin-bottom: 20px;
+    height: 360px;
+    width: 360px;
+    margin-bottom: 40px;
 }
 
-#to-questions-btn{
-    width: 150px;
-}
-
-#countdown-container{
+#capture-btn .btn__icon{
+    width: 140px;
     display: none;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #33333322;
-    z-index: 100;
+}
+#capture-btn .btn__icon.show{
+    display: block;
 }
 
-#countdown-container.show{
-    display: block;
+#capture-btn:disabled svg path{
+    fill: #00010933;
+}
+
+#to-webcam-btn, #to-questions-btn, #done-btn{
+    width: 360px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.answer__container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.answerBtns{
+    display: grid;
+    /* grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; 
+    gap: 40px; */
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 64px;
+    width: 100%;
+    min-height: 600px;
+}
+
+.answerBtn{
+    font-size: 56px;
+    font-weight: bold;
+}
+
+.btn:active{
+    background-color: #39FF14;
+}
+
+#onsor-last-view div{
+    font-size: 36px;
+    text-align: center;
+}
+
+#onsor-last-view div.arabic-text{
+    margin-bottom: 50px;
+}
+
+#done-btn{
+    margin-top: 130px;
 }

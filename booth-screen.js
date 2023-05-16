@@ -1,16 +1,15 @@
-const webcamView = document.getElementById("webcam-view");
-const canvas = document.getElementById("photo-canvas");
-
 const questions = window.electronApi.Questions;
+const toArabicNumbers = window.electronApi.toArabicNumbers;
 
+const canvas = document.getElementById("photo-canvas");
 const createAnswersHtmlString = (answers) => {
   return answers.reduce((acc, answer, i) => {
     const answerStr = `
     <li class="answer">
-      <button class="btn answer__btn" data-answerIndex="${i}">
+      <div class="answer__container" data-answerIndex="${i}">
         <span>${answer.english}</span>
         <span class="arabic-text">${answer.arabic}</span>
-      </button>
+      </div>
     </li>
     `;
     return acc + answerStr;
@@ -18,30 +17,46 @@ const createAnswersHtmlString = (answers) => {
 };
 
 const renderQuestionViews = () => {
+  const firstQuestionView = window.electronApi.FirstQuestionView;
+
+  const lastView = document.getElementById("onsor-last-view");
+  lastView.dataset.view = firstQuestionView + questions.length;
+
   const questionViewTemplate = document.getElementById(
     "question-view-template"
   );
-
-  const firstQuestionView = 3;
 
   if (!questionViewTemplate) return;
 
   questions.forEach((question, i) => {
     const clonedTemplate = questionViewTemplate.content.cloneNode(true);
+    // Set view number
     const view = clonedTemplate.querySelector(".boothView");
     view.dataset.view = i + firstQuestionView;
+    // Set question number
+    const questionNumEng = clonedTemplate.querySelector(
+      ".questionNumber .questionNumber__english"
+    );
+    questionNumEng.innerText = `Question ${i + 1} / ${questions.length}`;
 
+    const questionNumArab = clonedTemplate.querySelector(
+      ".questionNumber .questionNumber__arabic"
+    );
+    questionNumArab.innerText = `الــسؤال ${toArabicNumbers(
+      i + 1
+    )} / ${toArabicNumbers(questions.length)}`;
+    // Set question text
     const questionTextEng = clonedTemplate.querySelector(
-      "h2.question.english-text"
+      "h2.question__text.english-text"
     );
     const questionTextArab = clonedTemplate.querySelector(
-      "h2.question.arabic-text"
+      "h2.question__text.arabic-text"
     );
 
     questionTextEng.innerText = question.english;
     questionTextArab.innerText = question.arabic;
-
-    const answersList = clonedTemplate.querySelector(".answers");
+    // Create answers list
+    const answersList = clonedTemplate.querySelector(".question__answers");
 
     const answersHtmlStr = createAnswersHtmlString(question.answers);
 
@@ -49,35 +64,8 @@ const renderQuestionViews = () => {
     const boothViewsContainer = document.getElementById(
       "booth-views-container"
     );
-    boothViewsContainer.appendChild(clonedTemplate);
+    boothViewsContainer.insertBefore(view, lastView);
   });
 };
 
 renderQuestionViews();
-
-const openCam = () => {
-  let All_mediaDevices = navigator.mediaDevices;
-  if (!All_mediaDevices || !All_mediaDevices.getUserMedia) {
-    console.log("getUserMedia() not supported.");
-    return;
-  }
-  All_mediaDevices.getUserMedia({
-    audio: false,
-    video: true,
-  })
-    .then(function (vidStream) {
-      if ("srcObject" in webcamView) {
-        webcamView.srcObject = vidStream;
-      } else {
-        webcamView.src = window.URL.createObjectURL(vidStream);
-      }
-      webcamView.onloadedmetadata = function (e) {
-        webcamView.play();
-      };
-    })
-    .catch(function (e) {
-      console.error(e);
-    });
-};
-
-openCam();
