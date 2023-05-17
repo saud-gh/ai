@@ -17,7 +17,7 @@ function createWindow() {
 
   let secWidth;
   let secHeight;
-  // console.log("displays", screen.getAllDisplays());
+  console.log("displays", screen.getAllDisplays());
   // const secondaryDisplay = screen.getAllDisplays()[1];
   const secondaryDisplay = null;
 
@@ -26,12 +26,11 @@ function createWindow() {
     secHeight = secondaryDisplay.workAreaSize.height;
   }
 
-  // const { height, width } = primaryDisplay.workAreaSize;
-  // console.log(screen.getAllDisplays());
-
   const onsorWindowOptions = {
-    x: 0,
-    y: 0,
+    // x: 0,
+    // y: 0,
+    x: primaryDisplay.bounds.x,
+    y: primaryDisplay.bounds.y,
     width: secondaryDisplay ? secWidth : priWidth / 2,
     height: secondaryDisplay ? secHeight : priHeight,
   };
@@ -41,6 +40,8 @@ function createWindow() {
       // TODO: Change the preload file
       preload: path.join(__dirname, "preload.js"),
       sandbox: false,
+      nodeIntegration: true,
+      // contextIsolation: false,
     },
     autoHideMenuBar: true,
     titleBarStyle: "hidden",
@@ -54,8 +55,11 @@ function createWindow() {
         height: secHeight,
       }
     : {
-        x: priWidth / 2,
+        // TODO: Remove later!!!
+        x: 1280 + priWidth / 2,
         y: 0,
+        // x: priWidth / 2,
+        // y: 0,
         width: priWidth / 2,
         height: priHeight,
       };
@@ -66,6 +70,8 @@ function createWindow() {
       // TODO: Change the preload file
       preload: path.join(__dirname, "preload.js"),
       sandbox: false,
+      nodeIntegration: true,
+      // contextIsolation: false,
     },
     autoHideMenuBar: true,
     titleBarStyle: "hidden",

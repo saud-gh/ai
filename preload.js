@@ -8,9 +8,11 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 const { questions } = require("./constants");
-// const Slider = require("./src/Slider.js");
+const store = require("./data/store");
+const userInfoSlice = require("./data/slices/userInfo");
+const answersSlice = require("./data/slices/answers");
 
-let Store = {};
+store.subscribe(() => console.log("New State:", store.getState()));
 
 contextBridge.exposeInMainWorld("electronApi", {
   Questions: questions,
@@ -33,18 +35,13 @@ contextBridge.exposeInMainWorld("electronApi", {
       return arabicNumbers[d];
     });
   },
+  setUserInfo: (info) =>
+    store.dispatch(userInfoSlice.actions.setUserInfo(info)),
+  getUserInfo: () => store.getState().userInfo,
   generatePhoto: (store) => ipcRenderer.send("generate-photo", store),
-  // countdownEnded: () => {
-  //   const captureBtn = document.getElementById("capture-btn");
-
-  //   if (!captureBtn) return;
-
-  //   captureBtn.disabled = null;
-  // },
-  updateStore: (store) => {
-    Store = { ...store };
-  },
-  getStore: () => Store,
+  setAnswer: (indexes) =>
+    store.dispatch(answersSlice.actions.setAnswer(indexes)),
+  getAnswers: () => store.getState().answers,
 });
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -89,11 +86,6 @@ const onCountdownEnded = (_, store) => {
   const cameraIcon = document.getElementById("camera-icon");
   const reloadIcon = document.getElementById("reload-icon");
 
-  const answerButtonsViews = document.querySelector(
-    `.onsorView[data-view="${3}"]`
-  );
-  if (!answerButtonsViews) renderAnswerButtons(store);
-
   const toQuestionsBtn = document.getElementById("to-questions-btn");
   if (!captureBtn || !toQuestionsBtn) return;
   console.log("countdown end", store);
@@ -124,73 +116,6 @@ const updateCurrentView = (_, store) => {
 
   // console.log(viewElement);
   viewElement.classList.add("show");
-};
-
-const renderAnswerButtons = (store) => {
-  const answersTemplate = document.getElementById("answers-btns-template");
-
-  // const questions = window.electronApi.Questions;
-  // NOTE: You can refactor to display same view as long as the booth screen is showing a question
-  (questions || []).forEach((question, qIndex) => {
-    const clonedTemplate = answersTemplate.content.cloneNode(true);
-
-    const view = clonedTemplate.querySelector(".onsorView");
-    const viewNum = qIndex + window.electronApi.FirstQuestionView;
-    view.dataset.view = viewNum;
-    // Render question number
-    const questionNumEng = clonedTemplate.querySelector(
-      ".questionNumber .questionNumber__english"
-    );
-    questionNumEng.innerText = `Question ${qIndex + 1} / ${questions.length}`;
-
-    const questionNumArab = clonedTemplate.querySelector(
-      ".questionNumber .questionNumber__arabic"
-    );
-    questionNumArab.innerText = `الــسؤال ${toArabicNumbers(
-      qIndex + 1
-    )} / ${toArabicNumbers(questions.length)}`;
-
-    const lastView = document.getElementById("onsor-last-view");
-    lastView.dataset.view =
-      window.electronApi.FirstQuestionView + questions.length;
-
-    const answerBtns = clonedTemplate.querySelectorAll(
-      ".answerBtns button.answerBtn"
-    );
-
-    for (const btn of answerBtns) {
-      btn.addEventListener("click", (event) => {
-        const answerIndex = Number(event.target.dataset["answerIndex"]);
-
-        const isLastQuestion = qIndex === questions.length - 1;
-        const shouldStartPhotoGen =
-          qIndex === window.electronApi.PhotoGenQuestionIndex;
-
-        // if (qIndex <= window.electronApi.PhotoGenQuestionIndex)
-        store.answers[qIndex] = answerIndex;
-
-        if (isLastQuestion) {
-          console.log("This is last question, store", store);
-          renderGeneratedPhoto(store);
-        } else {
-          if (shouldStartPhotoGen) {
-            // TODO: Start generating photo
-            const newStore = window.electronApi.getStore();
-            console.log("new store", newStore);
-            window.electronApi.generatePhoto(store);
-
-            // generatePhoto(store);
-          } else {
-          }
-        }
-        store.currentView = viewNum + 1;
-        window.electronApi.updateView(store);
-        showView(store.currentView);
-      });
-    }
-    onsorViewsContainer.insertBefore(view, lastView);
-    // onsorViewsContainer.appendChild(view);
-  });
 };
 
 const savePhoto = (_, store) => {
@@ -224,9 +149,10 @@ const savePhoto = (_, store) => {
   originalPhoto.src = store.takenPhoto;
 };
 
-const generatePhoto = async (_, store) => {
-  console.log("store in generate photo", store);
-  const answersObj = store.answers;
+const generatePhoto = async (_, store_) => {
+  console.log("state in generate photo", store.getState());
+  // const answersObj = store.answers;
+  const answersObj = store.getState().answers;
   console.log("answersObj", answersObj);
   const answerIndexes = Object.keys(answersObj)
     .map((key) => {

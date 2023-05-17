@@ -1,7 +1,6 @@
 const questions = window.electronApi.Questions;
 const toArabicNumbers = window.electronApi.toArabicNumbers;
 
-const canvas = document.getElementById("photo-canvas");
 const createAnswersHtmlString = (answers) => {
   return answers.reduce((acc, answer, i) => {
     const answerStr = `

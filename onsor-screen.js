@@ -48,6 +48,11 @@ userInfoForm.onsubmit = (e) => {
   for (const key in store.userInfo) {
     store.userInfo[key] = e.target.elements[key].value;
   }
+  const userInfo = {};
+  for (const key of ["firstName", "lastName", "email"]) {
+    userInfo[key] = e.target.elements[key].value;
+  }
+  window.electronApi.setUserInfo(userInfo);
   console.log("user info", store.userInfo);
 
   window.electronApi.openWebcam();
@@ -62,6 +67,8 @@ captureBtn.addEventListener("click", () => {
   window.electronApi.startCountdown(store);
   // TODO: Disable buttons while waiting for timer to end
   captureBtn.disabled = true;
+
+  console.log("user info from store", window.electronApi.getUserInfo());
 });
 
 toQuestionsBtn.addEventListener("click", () => {
@@ -177,15 +184,17 @@ const renderAnswerButtons = () => {
 
         // if (qIndex <= window.electronApi.PhotoGenQuestionIndex)
         store.answers[qIndex] = answerIndex;
-
+        window.electronApi.setAnswer({
+          questionIndex: qIndex,
+          answerIndex,
+        });
         if (isLastQuestion) {
           console.log("This is last question, store", store);
           renderGeneratedPhoto(store);
         } else {
           if (shouldStartPhotoGen) {
             // TODO: Start generating photo
-            const newStore = window.electronApi.getStore();
-            console.log("new store", newStore);
+
             window.electronApi.generatePhoto(store);
 
             // generatePhoto(store);
@@ -232,5 +241,5 @@ const resetViews = () => {
 
 resetStore();
 resetViews();
-// renderAnswerButtons();
+renderAnswerButtons();
 // TODO: Set form inputs to empty after experience ends
