@@ -7,12 +7,13 @@
  */
 const { contextBridge, ipcRenderer } = require("electron");
 
-const { questions } = require("./constants");
+const { questions, url } = require("./constants");
 const store = require("./data/store");
 const userInfoSlice = require("./data/slices/userInfo");
 const answersSlice = require("./data/slices/answers");
+const photosSlice = require("./data/slices/photos");
 
-store.subscribe(() => console.log("New State:", store.getState()));
+// store.subscribe(() => console.log("New State:", store.getState()));
 
 contextBridge.exposeInMainWorld("electronApi", {
   Questions: questions,
@@ -39,9 +40,22 @@ contextBridge.exposeInMainWorld("electronApi", {
     store.dispatch(userInfoSlice.actions.setUserInfo(info)),
   getUserInfo: () => store.getState().userInfo,
   generatePhoto: (store) => ipcRenderer.send("generate-photo", store),
+
   setAnswer: (indexes) =>
     store.dispatch(answersSlice.actions.setAnswer(indexes)),
   getAnswers: () => store.getState().answers,
+
+  setOriginalPhoto: (photo) =>
+    store.dispatch(photosSlice.actions.originalPhoto(photo)),
+  getOriginalPhoto: () => store.getState().photos.originalPhoto,
+
+  setGeneratedPhoto: (photo) =>
+    store.dispatch(photosSlice.actions.generatedPhoto(photo)),
+  getGeneratedPhoto: () => store.getState().photos.generatedPhoto,
+
+  getState: () => store.getState(),
+
+  getGeneratedPhoto: () => ipcRenderer.send("get-generated-photo"),
 });
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -65,7 +79,32 @@ window.addEventListener("DOMContentLoaded", () => {
   ipcRenderer.on("reset-booth-views", resetBoothViews);
 
   ipcRenderer.on("generate-photo", generatePhoto);
+
+  ipcRenderer.on("get-generated-photo", getGeneratedPhoto);
 });
+
+const getBase64StringFromDataURL = (dataURL) =>
+  dataURL.replace("data:", "").replace(/^.+,/, "");
+
+const getGeneratedPhoto = async () => {
+  setTimeout(async () => {
+    console.log("3 MINUTES OVERRRR!!!!");
+    const { generatedPhotoId } = store.getState().photos;
+    const res = await fetch(`${url}/generated_image/${generatedPhotoId}`);
+    const blob = await res.blob();
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = getBase64StringFromDataURL(reader.result);
+
+      const generatedPhoto = document.getElementById("generated-photo");
+      generatedPhoto.src = "data:image/jpeg;base64," + base64;
+      // TODO: Remove placeholder/loading screen
+      // TODO: Add profile
+    };
+    reader.readAsDataURL(blob);
+  }, 180 * 1000);
+};
 
 const resetBoothViews = () => {
   const generatedPhoto = document.getElementById("generated-photo");
@@ -81,19 +120,19 @@ const resetBoothViews = () => {
   webcamView.classList.add("show");
 };
 
-const onCountdownEnded = (_, store) => {
+const onCountdownEnded = (_, store_) => {
   const captureBtn = document.getElementById("capture-btn");
   const cameraIcon = document.getElementById("camera-icon");
   const reloadIcon = document.getElementById("reload-icon");
 
   const toQuestionsBtn = document.getElementById("to-questions-btn");
+  console.log("countdown end", store.getState().photos);
   if (!captureBtn || !toQuestionsBtn) return;
-  console.log("countdown end", store);
   // Remove disable buttons
   captureBtn.disabled = null;
   toQuestionsBtn.disabled = null;
   // Change the icon
-  const { takenPhoto } = store;
+  const { originalPhoto: takenPhoto } = store.getState().photos;
   if (takenPhoto && takenPhoto !== "") {
     cameraIcon.classList.remove("show");
     reloadIcon.classList.add("show");
@@ -118,7 +157,7 @@ const updateCurrentView = (_, store) => {
   viewElement.classList.add("show");
 };
 
-const savePhoto = (_, store) => {
+const savePhoto = (_, store_) => {
   const webcamView = document.getElementById("webcam-view");
   const canvas = document.getElementById("photo-canvas");
 
@@ -138,22 +177,22 @@ const savePhoto = (_, store) => {
   canvas.classList.add("show");
   webcamView.classList.remove("show");
 
-  store.takenPhoto = canvas.toDataURL("image/jpeg");
+  const photo = canvas.toDataURL("image/jpeg");
 
+  store.dispatch(photosSlice.actions.originalPhoto(photo));
+
+  console.log("photo after savePhoto", store.getState().photos);
+  ipcRenderer.send("countdown-ended");
   // Check if answer button views are rendered
-
-  ipcRenderer.send("countdown-ended", store);
 
   // TODO: Remove the following after backend is ready
   const originalPhoto = document.getElementById("original-photo");
-  originalPhoto.src = store.takenPhoto;
+  originalPhoto.src = photo;
 };
 
-const generatePhoto = async (_, store_) => {
+const generatePhoto = async (_, { answers: answersObj, userInfo }) => {
   console.log("state in generate photo", store.getState());
-  // const answersObj = store.answers;
-  const answersObj = store.getState().answers;
-  console.log("answersObj", answersObj);
+
   const answerIndexes = Object.keys(answersObj)
     .map((key) => {
       return answersObj[key];
@@ -164,31 +203,30 @@ const generatePhoto = async (_, store_) => {
     (answerIndex, questionIndex) =>
       questions[questionIndex].answers[answerIndex].english
   );
-  console.log("answers", answers);
-  const url = "http://192.168.1.180:5000";
+
   const res = await fetch(url + "/generate_personality", {
     method: "POST",
     body: JSON.stringify({
       traits: answers.join(","),
-      photo: store.takenPhoto,
-      ...store.userInfo,
+      photo: store.getState().photos.originalPhoto.split(",")[1],
+      gender: "Male",
+      ...userInfo,
     }),
   });
 
   const json = await res.json();
   console.log("personality json", json);
-  // const json = {
-  //   id: "Some ID",
-  //   profile: "Some Profile",
-  // };
+
   // TODO: Store generated photo(s)
-  store.generatedPhotoId = json.id;
-  store.profile = json.profile;
+  // store.generatedPhotoId = json.id;
+  // store.profile = json.profile;
 
   const printRes = await fetch(`${url}/generate_image/${json.id}`);
   const printJson = await printRes.json();
 
   console.log("gernerate json", printJson);
+
+  store.dispatch(photosSlice.actions.generatedPhoto(json.id));
 };
 
 const openWebcam = () => {

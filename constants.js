@@ -22,6 +22,7 @@ const question = {
 };
 
 module.exports = {
+  url: "http://192.168.1.180:5000",
   questions: [
     {
       arabic: "أي من العناصر الأربعة تجذبك أكثر؟",

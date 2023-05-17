@@ -5,7 +5,7 @@ const answers = createSlice({
   initialState: {},
   reducers: {
     setAnswer: (state, action) => {
-      console.log("answers", action.payload);
+      // console.log("answers", action.payload);
       const { questionIndex, answerIndex } = action.payload;
       return {
         ...state,

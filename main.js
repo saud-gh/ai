@@ -56,10 +56,10 @@ function createWindow() {
       }
     : {
         // TODO: Remove later!!!
-        x: 1280 + priWidth / 2,
-        y: 0,
-        // x: priWidth / 2,
+        // x: 1280 + priWidth / 2,
         // y: 0,
+        x: priWidth / 2,
+        y: 0,
         width: priWidth / 2,
         height: priHeight,
       };
@@ -124,6 +124,10 @@ app.whenReady().then(() => {
 
   ipcMain.on("generate-photo", (_, data) => {
     boothWindow.webContents.send("generate-photo", data);
+  });
+
+  ipcMain.on("get-generated-photo", (_, data) => {
+    boothWindow.webContents.send("get-generated-photo");
   });
 
   createWindow();

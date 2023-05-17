@@ -48,13 +48,12 @@ userInfoForm.onsubmit = (e) => {
   for (const key in store.userInfo) {
     store.userInfo[key] = e.target.elements[key].value;
   }
+  console.log("user info", store.userInfo);
   const userInfo = {};
   for (const key of ["firstName", "lastName", "email"]) {
     userInfo[key] = e.target.elements[key].value;
   }
   window.electronApi.setUserInfo(userInfo);
-  console.log("user info", store.userInfo);
-
   window.electronApi.openWebcam();
 
   store.currentView = 2;
@@ -67,8 +66,6 @@ captureBtn.addEventListener("click", () => {
   window.electronApi.startCountdown(store);
   // TODO: Disable buttons while waiting for timer to end
   captureBtn.disabled = true;
-
-  console.log("user info from store", window.electronApi.getUserInfo());
 });
 
 toQuestionsBtn.addEventListener("click", () => {
@@ -131,17 +128,6 @@ const generatePhoto = async (store) => {
   console.log("gernerate json", printJson);
 };
 
-const renderGeneratedPhoto = async (store) => {
-  // const res = await fetch(`${url}/generated_image/${store.generatedPhotoId}`);
-  // const json = await res.json();
-
-  // store.generatedPhoto = json.photo; //TODO: Change when ready
-
-  const generatedPhoto = document.getElementById("generated-photo");
-  // generatedPhoto.src = json.photo;
-  generatedPhoto.src = `${url}/generated_image/${store.generatedPhotoId}`;
-};
-
 const renderAnswerButtons = () => {
   const answersTemplate = document.getElementById("answers-btns-template");
 
@@ -184,18 +170,22 @@ const renderAnswerButtons = () => {
 
         // if (qIndex <= window.electronApi.PhotoGenQuestionIndex)
         store.answers[qIndex] = answerIndex;
-        window.electronApi.setAnswer({
-          questionIndex: qIndex,
-          answerIndex,
-        });
+
+        window.electronApi.setAnswer({ questionIndex: qIndex, answerIndex });
+
+        console.log("taken photo", window.electronApi.getState());
         if (isLastQuestion) {
           console.log("This is last question, store", store);
-          renderGeneratedPhoto(store);
+          // renderGeneratedPhoto(store);
+          window.electronApi.getGeneratedPhoto();
         } else {
           if (shouldStartPhotoGen) {
             // TODO: Start generating photo
-
-            window.electronApi.generatePhoto(store);
+            window.electronApi.generatePhoto({
+              answers: window.electronApi.getAnswers(),
+              userInfo: window.electronApi.getUserInfo(),
+              takenPhoto: window.electronApi.getOriginalPhoto(),
+            });
 
             // generatePhoto(store);
           } else {
