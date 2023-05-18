@@ -9,10 +9,10 @@ const userInfo = createSlice({
     firstName: "",
     lastName: "",
     email: "",
+    gender: "",
   },
   reducers: {
     setUserInfo: (state = {}, action) => {
-      console.log("state", action.payload);
       return {
         ...state,
         ...action.payload,

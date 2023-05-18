@@ -34,92 +34,94 @@
         </div>
       </div>
     </template>
-    <div id="onsor-views-container" class="viewsContainer">
-      <div class="onsorView show" data-view="1">
-        <div class="onsorView__content">
-          <form id="user-info-form">
-            <!-- TODO: Remove default values -->
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value="Saud"
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              value="Al Alawi"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              value="saud.alawi@onsor.com"
-              required
-            />
-            <div class="onsorView__btnContainer">
-              <button id="to-webcam-btn" class="btn" type="submit">
-                <span>Next</span>
-                <span class="arabic-text">التالي</span>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="onsorView" data-view="2">
-        <div class="onsorView__content">
-          <button id="capture-btn" class="btn">
-            <svg
-              id="reload-icon"
-              class="btn__icon"
-              viewBox="0 0 8 8"
-              xmlns="http://www.w3.org/2000/svg"
-              transform="rotate(90)"
-            >
-              <!-- <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                <g
-                id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                /> -->
-              <!-- <g id="SVGRepo_iconCarrier"> -->
-              <path
-                d="M4 0c-2.2 0-4 1.8-4 4s1.8 4 4 4c1.1 0 2.12-.43 2.84-1.16l-.72-.72c-.54.54-1.29.88-2.13.88-1.66 0-3-1.34-3-3s1.34-3 3-3c.83 0 1.55.36 2.09.91l-1.09 1.09h3v-3l-1.19 1.19c-.72-.72-1.71-1.19-2.81-1.19z"
-                fill="#000109"
+    <div class="screenContainer screenContainer--onsor">
+      <div id="onsor-views-container" class="viewsContainer">
+        <div class="onsorView show" data-view="1">
+          <div class="onsorView__content">
+            <form id="user-info-form">
+              <!-- TODO: Remove default values -->
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value="Saud"
+                required
               />
-              <!-- </g> -->
-            </svg>
-            <svg
-              id="camera-icon"
-              class="btn__icon show"
-              viewBox="0 0 40 34"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20 27.3352C22.5 27.3352 24.625 26.5104 26.375 24.8609C28.125 23.2113 29 21.2083 29 18.8519C29 16.4954 28.125 14.4924 26.375 12.8428C24.625 11.1933 22.5 10.3685 20 10.3685C17.5 10.3685 15.375 11.1933 13.625 12.8428C11.875 14.4924 11 16.4954 11 18.8519C11 21.2083 11.875 23.2113 13.625 24.8609C15.375 26.5104 17.5 27.3352 20 27.3352ZM20 23.5648C18.6 23.5648 17.4167 23.1092 16.45 22.1981C15.4833 21.2869 15 20.1715 15 18.8519C15 17.5322 15.4833 16.4168 16.45 15.5056C17.4167 14.5945 18.6 14.1389 20 14.1389C21.4 14.1389 22.5833 14.5945 23.55 15.5056C24.5167 16.4168 25 17.5322 25 18.8519C25 20.1715 24.5167 21.2869 23.55 22.1981C22.5833 23.1092 21.4 23.5648 20 23.5648ZM4 33.9333C2.9 33.9333 1.95833 33.5642 1.175 32.8258C0.391667 32.0874 0 31.1998 0 30.163V7.54074C0 6.50389 0.391667 5.61628 1.175 4.87792C1.95833 4.13955 2.9 3.77037 4 3.77037H10.3L14 0H26L29.7 3.77037H36C37.1 3.77037 38.0417 4.13955 38.825 4.87792C39.6083 5.61628 40 6.50389 40 7.54074V30.163C40 31.1998 39.6083 32.0874 38.825 32.8258C38.0417 33.5642 37.1 33.9333 36 33.9333H4ZM36 30.163V7.54074H27.9L24.25 3.77037H15.75L12.1 7.54074H4V30.163H36Z"
-                fill="#000109"
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value="Al Alawi"
+                required
               />
-            </svg>
-          </button>
-          <!-- TODO: Add disabled -->
-          <button id="to-questions-btn" class="btn">
-            <span>Next</span>
-            <span class="arabic-text">التالي</span>
-          </button>
+              <input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                value="saud.alawi@onsor.com"
+                required
+              />
+              <div class="onsorView__btnContainer">
+                <button id="to-webcam-btn" class="btn" type="submit">
+                  <span>Next</span>
+                  <span class="arabic-text">التالي</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-      <div id="onsor-last-view" class="onsorView">
-        <div class="onsorView__content">
-          <div class="arabic-text">شكرًا لك!</div>
-          <div>Thank You!</div>
-          <button id="done-btn" class="btn">
-            <span>Exit</span>
-            <span class="arabic-text">الخروج</span>
-          </button>
+        <div class="onsorView" data-view="2">
+          <div class="onsorView__content">
+            <button id="capture-btn" class="btn">
+              <svg
+                id="reload-icon"
+                class="btn__icon"
+                viewBox="0 0 8 8"
+                xmlns="http://www.w3.org/2000/svg"
+                transform="rotate(90)"
+              >
+                <!-- <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                  <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  /> -->
+                <!-- <g id="SVGRepo_iconCarrier"> -->
+                <path
+                  d="M4 0c-2.2 0-4 1.8-4 4s1.8 4 4 4c1.1 0 2.12-.43 2.84-1.16l-.72-.72c-.54.54-1.29.88-2.13.88-1.66 0-3-1.34-3-3s1.34-3 3-3c.83 0 1.55.36 2.09.91l-1.09 1.09h3v-3l-1.19 1.19c-.72-.72-1.71-1.19-2.81-1.19z"
+                  fill="#000109"
+                />
+                <!-- </g> -->
+              </svg>
+              <svg
+                id="camera-icon"
+                class="btn__icon show"
+                viewBox="0 0 40 34"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 27.3352C22.5 27.3352 24.625 26.5104 26.375 24.8609C28.125 23.2113 29 21.2083 29 18.8519C29 16.4954 28.125 14.4924 26.375 12.8428C24.625 11.1933 22.5 10.3685 20 10.3685C17.5 10.3685 15.375 11.1933 13.625 12.8428C11.875 14.4924 11 16.4954 11 18.8519C11 21.2083 11.875 23.2113 13.625 24.8609C15.375 26.5104 17.5 27.3352 20 27.3352ZM20 23.5648C18.6 23.5648 17.4167 23.1092 16.45 22.1981C15.4833 21.2869 15 20.1715 15 18.8519C15 17.5322 15.4833 16.4168 16.45 15.5056C17.4167 14.5945 18.6 14.1389 20 14.1389C21.4 14.1389 22.5833 14.5945 23.55 15.5056C24.5167 16.4168 25 17.5322 25 18.8519C25 20.1715 24.5167 21.2869 23.55 22.1981C22.5833 23.1092 21.4 23.5648 20 23.5648ZM4 33.9333C2.9 33.9333 1.95833 33.5642 1.175 32.8258C0.391667 32.0874 0 31.1998 0 30.163V7.54074C0 6.50389 0.391667 5.61628 1.175 4.87792C1.95833 4.13955 2.9 3.77037 4 3.77037H10.3L14 0H26L29.7 3.77037H36C37.1 3.77037 38.0417 4.13955 38.825 4.87792C39.6083 5.61628 40 6.50389 40 7.54074V30.163C40 31.1998 39.6083 32.0874 38.825 32.8258C38.0417 33.5642 37.1 33.9333 36 33.9333H4ZM36 30.163V7.54074H27.9L24.25 3.77037H15.75L12.1 7.54074H4V30.163H36Z"
+                  fill="#000109"
+                />
+              </svg>
+            </button>
+            <!-- TODO: Add disabled -->
+            <button id="to-questions-btn" class="btn">
+              <span>Next</span>
+              <span class="arabic-text">التالي</span>
+            </button>
+          </div>
+        </div>
+        <div id="onsor-last-view" class="onsorView">
+          <div class="onsorView__content">
+            <div class="arabic-text">شكرًا لك!</div>
+            <div>Thank You!</div>
+            <button id="done-btn" class="btn">
+              <span>Exit</span>
+              <span class="arabic-text">الخروج</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -114,10 +114,7 @@ const generatePhoto = async (store) => {
 
   const json = await res.json();
   console.log("personality json", json);
-  // const json = {
-  //   id: "Some ID",
-  //   profile: "Some Profile",
-  // };
+  window.electronApi.setProfile(json.profile);
   // TODO: Store generated photo(s)
   store.generatedPhotoId = json.id;
   store.profile = json.profile;

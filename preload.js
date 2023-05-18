@@ -12,6 +12,7 @@ const store = require("./data/store");
 const userInfoSlice = require("./data/slices/userInfo");
 const answersSlice = require("./data/slices/answers");
 const photosSlice = require("./data/slices/photos");
+const profileSlice = require("./data/slices/profile");
 
 // store.subscribe(() => console.log("New State:", store.getState()));
 
@@ -53,6 +54,9 @@ contextBridge.exposeInMainWorld("electronApi", {
     store.dispatch(photosSlice.actions.generatedPhoto(photo)),
   getGeneratedPhoto: () => store.getState().photos.generatedPhoto,
 
+  setProfile: (profile) =>
+    store.dispatch(profileSlice.actions.profile(profile)),
+
   getState: () => store.getState(),
 
   getGeneratedPhoto: () => ipcRenderer.send("get-generated-photo"),
@@ -87,8 +91,14 @@ const getBase64StringFromDataURL = (dataURL) =>
   dataURL.replace("data:", "").replace(/^.+,/, "");
 
 const getGeneratedPhoto = async () => {
+  // TODO: Add profile
+  const profile = document.getElementById("profile");
+  profile.innerText = store.getState().profile;
+
+  // TODO: Send get requests for at least 1 minute
+
   setTimeout(async () => {
-    console.log("3 MINUTES OVERRRR!!!!");
+    console.log("1 MINUTE OVERRRR!!!!");
     const { generatedPhotoId } = store.getState().photos;
     const res = await fetch(`${url}/generated_image/${generatedPhotoId}`);
     const blob = await res.blob();
@@ -100,10 +110,9 @@ const getGeneratedPhoto = async () => {
       const generatedPhoto = document.getElementById("generated-photo");
       generatedPhoto.src = "data:image/jpeg;base64," + base64;
       // TODO: Remove placeholder/loading screen
-      // TODO: Add profile
     };
     reader.readAsDataURL(blob);
-  }, 180 * 1000);
+  }, 60 * 1000);
 };
 
 const resetBoothViews = () => {

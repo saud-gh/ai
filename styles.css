@@ -4,13 +4,23 @@
 body, html{
     margin: 0;
     color: #ffffff;
-    background-color: #000109;
+    /* background-color: #000109; */
     height: 100%;
 }
 
 *{
     box-sizing: border-box;
     font-family: "Tajawal";
+}
+
+.screenContainer{
+    width: 100%;
+    height: 100%;
+}
+
+.screenContainer--booth{
+    background-image: url(./bg1.jpg);
+    background-size: cover;
 }
 
 .arabic-text{
@@ -21,7 +31,7 @@ body, html{
     margin: 0 auto;
     height: 100%;
     overflow: hidden;
-    max-width: 880px;
+    max-width: 890px;
 }
 
 .heading{
@@ -29,9 +39,16 @@ body, html{
 }
 
 /* Booth Screen Styles */
+#booth-views-container{
+
+}
 .boothView{
     display: none;
-    height: 100%;
+    min-height: 85vh;
+    background: rgba(42, 49, 53, 0.75);
+    border-radius: 120px;
+    padding: 120px 60px;
+    margin-top: 120px;
 }
 
 .boothView.show{
@@ -43,7 +60,7 @@ body, html{
 }
 
 .headings{
-    margin: 250px 0;
+    /* margin: 250px 0; */
     /* margin-top: 250px; */
 }
 .headings .arabic-text,
@@ -52,14 +69,13 @@ body, html{
 }
 
 .instructions--arabic{
-    margin-bottom: 250px;
+    margin-bottom: 190px;
 }
 
 .webcamViewContainer{
-    /* overflow: hidden; */
     position: relative;
-    height: 660px;
-    margin-top: 120px;
+    height: 578px;
+    margin-top: 190px;
 }
 #webcam-view{
     display: none;
@@ -80,7 +96,7 @@ body, html{
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: #00010922;
+    background-color: #00010944;
     z-index: 100;
     font-size: 100px;
     font-weight: bold;
@@ -136,7 +152,7 @@ body, html{
     margin: 18px 0;
 }
 .question__answers{
-    margin-top: 300px;
+    margin-top: 170px;
 }
 .answer{
     font-size: 36px;
@@ -186,6 +202,10 @@ body, html{
 
 /* Onsor Screen Styles */
 
+.screenContainer--onsor{
+    background-image: url(./bg2.jpg);
+    background-size: cover;
+}
 /* TODO: Animation for changing between views */
 .onsorView{
     display: none;
@@ -214,10 +234,19 @@ body, html{
 .btn, #user-info-form input, .answer__container{
     padding: 20px;
     font-size: 36px;
-    background-color: #ffffff;
     border: none;
     border-radius: 18px;
 }
+
+.btn, #user-info-form input{
+    background-color: #faa950;
+    color: #000000;
+}
+
+.answer__container{
+    background-color: #ffffff;
+}
+
 
 .onsorView__btnContainer{
     margin-top: 30px;

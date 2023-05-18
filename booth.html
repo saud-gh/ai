@@ -39,83 +39,91 @@
       </div>
       <!-- </div> -->
     </template>
-    <!-- <h1>Booth Screen</h1> -->
-    <div id="booth-views-container" class="viewsContainer">
-      <div class="boothView show" data-view="1">
-        <!-- <div class="boothView__content"> -->
-        <div class="headings">
-          <h2 class="arabic-text heading">
-            اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
-          </h2>
-          <h2 class="heading">Discover Beyond Your Imagination & Reality</h2>
+
+    <div class="screenContainer screenContainer--booth">
+      <div id="booth-views-container" class="viewsContainer">
+        <div class="boothView show" data-view="1">
+          <!-- <div class="boothView__content"> -->
+          <div class="headings">
+            <h2 class="arabic-text heading">
+              اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
+            </h2>
+            <h2 class="heading">Discover Beyond Your Imagination & Reality</h2>
+          </div>
+          <div class="arabic-text instructions instructions--arabic">
+            <p>يرجى الانتباه قبل البدء وقراءة خطوات إجراء التجربة:</p>
+            <ul>
+              <li>التجربة قائمة على إلتقاط صورة شخصية لك.</li>
+              <li>ستمر بعدد من الأسئلة التي تمس شخصيتك.</li>
+              <li>
+                النتيجة ستخرج لك مطبوعة بعد استخدام مزيج من خوارزميات الذكاء
+                الاصطناعي في معالجة النصوص وتوليد الصور كتذكار.
+              </li>
+            </ul>
+          </div>
+          <div class="instructions instructions--english">
+            <p>
+              Please pay attention before starting, and read the steps to
+              conduct the experiment:
+            </p>
+            <ul>
+              <li>The experiment is based on taking a personal photo.</li>
+              <li>
+                You'll go through a set of questions related to your
+                personality.
+              </li>
+              <li>
+                The result will be printed as a souvenir after using a
+                combination of AI algorithms in text processing and image
+                generation.
+              </li>
+            </ul>
+          </div>
+          <!-- </div> -->
         </div>
-        <div class="arabic-text instructions instructions--arabic">
-          <p>يرجى الانتباه قبل البدء وقراءة خطوات إجراء التجربة:</p>
-          <ul>
-            <li>التجربة قائمة على إلتقاط صورة شخصية لك.</li>
-            <li>ستمر بعدد من الأسئلة التي تمس شخصيتك.</li>
-            <li>
-              النتيجة ستخرج لك مطبوعة بعد استخدام مزيج من خوارزميات الذكاء
-              الاصطناعي في معالجة النصوص وتوليد الصور كتذكار.
-            </li>
-          </ul>
+        <div class="boothView" data-view="2">
+          <div class="headings">
+            <h2 class="arabic-text heading">
+              اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
+            </h2>
+            <h2 class="heading">Discover Beyond Your Imagination & Reality</h2>
+          </div>
+          <div class="webcamViewContainer">
+            <!--TODO: Remove 'show' class-->
+            <div id="countdown" class="show"></div>
+            <video id="webcam-view" class="show"></video>
+            <canvas id="photo-canvas"></canvas>
+            <div id="flash-overlay"></div>
+          </div>
         </div>
-        <div class="instructions instructions--english">
-          <p>
-            Please pay attention before starting, and read the steps to conduct
-            the experiment:
-          </p>
-          <ul>
-            <li>The experiment is based on taking a personal photo.</li>
-            <li>
-              You'll go through a set of questions related to your personality.
-            </li>
-            <li>
-              The result will be printed as a souvenir after using a combination
-              of AI algorithms in text processing and image generation.
-            </li>
-          </ul>
-        </div>
-        <!-- </div> -->
-      </div>
-      <div class="boothView" data-view="2">
-        <div class="headings">
-          <h2 class="arabic-text heading">
-            اكتشف أبعـــــــــــاد جديدة ما بين الخيال والحقيقة
-          </h2>
-          <h2 class="heading">Discover Beyond Your Imagination & Reality</h2>
-        </div>
-        <div class="webcamViewContainer">
-          <!--TODO: Remove 'show' class-->
-          <div id="countdown" class="show"></div>
-          <video id="webcam-view" class="show"></video>
-          <canvas id="photo-canvas"></canvas>
-          <div id="flash-overlay"></div>
-        </div>
-      </div>
-      <div id="onsor-last-view" class="boothView">
-        <div class="headings">
-          <h2 class="arabic-text heading">
-            نرجو بأنك حظيت بتجربة ممتعة مكنتك من تخيل شكلك بصورة أبعد من الواقع.
-          </h2>
-          <h2 class="heading">
-            Onsor hope you had an enjoyable experience that blew your
-            imagination beyond the reality.
-          </h2>
-        </div>
-        <div class="generatedPhoto">
-          <img
-            id="generated-photo"
-            class="generatedPhoto__img"
-            alt="Generated Photo"
-          />
-        </div>
-        <div class="originalPhoto">
-          <img
-            id="original-photo"
-            class="originalPhoto__img"
-            alt="Original Photo"
-          />
+        <div id="onsor-last-view" class="boothView">
+          <div class="headings">
+            <h2 class="arabic-text heading">
+              نرجو بأنك حظيت بتجربة ممتعة مكنتك من تخيل شكلك بصورة أبعد من
+              الواقع.
+            </h2>
+            <h2 class="heading">
+              Onsor hope you had an enjoyable experience that blew your
+              imagination beyond the reality.
+            </h2>
+          </div>
+          <div class="generatedPhoto">
+            <img
+              id="generated-photo"
+              class="generatedPhoto__img"
+              alt="Generated Photo"
+            />
+          </div>
+          <div>
+            <div class="originalPhoto">
+              <img
+                id="original-photo"
+                class="originalPhoto__img"
+                alt="Original Photo"
+              />
+            </div>
+            <div id="profile"></div>
+          </div>
         </div>
       </div>
     </div>
