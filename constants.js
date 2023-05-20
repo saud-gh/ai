@@ -245,5 +245,227 @@ module.exports = {
         },
       ],
     },
+    {
+      arabic: "كيف تصف نفسك؟",
+      english: "What describes you best?",
+      answers: [
+        {
+          arabic: "مغامر",
+          english: "Adventurous",
+        },
+        {
+          arabic: "مبدع",
+          english: "Creative",
+        },
+        {
+          arabic: "منطقي",
+          english: "Logical",
+        },
+        {
+          arabic: "عطوف",
+          english: "Compassionate",
+        },
+      ],
+    },
+    {
+      arabic: "", // TODO: Add
+      english: "What is your preferred communication style?",
+      answers: [
+        {
+          arabic: "مباشر",
+          english: "Direct",
+        },
+        {
+          arabic: "دبلوماسي",
+          english: "Diplomatic",
+        },
+        {
+          arabic: "حازم",
+          english: "Assertive",
+        },
+        {
+          arabic: "مستمع",
+          english: "Listening",
+        },
+      ],
+    },
+    {
+      arabic: "كيف تتعامل مع الضغط؟",
+      english: "How do you handle stress?",
+      answers: [
+        {
+          arabic: "ممارسة التمارين الرياضية",
+          english: "Exercise",
+        },
+        {
+          arabic: "التأمل",
+          english: "Meditate",
+        },
+        {
+          arabic: "التحدث مع شخص ما",
+          english: "Talk to someone",
+        },
+        {
+          arabic: "التنظيم",
+          english: "Organize",
+        },
+      ],
+    },
+    {
+      arabic: "ما نوع البيئة التي تزدهر فيها؟",
+      english: "What type of environment do you thrive in?",
+      answers: [
+        {
+          arabic: "المتغيرة",
+          english: "Fast-paced",
+        },
+        {
+          arabic: "المنظمة",
+          english: "Structured",
+        },
+        {
+          arabic: "الإبداعية",
+          english: "Creative",
+        },
+        {
+          arabic: "الداعمة",
+          english: "Supportive",
+        },
+      ],
+    },
+    {
+      arabic: "كيف تتخذ قراراتك؟",
+      english: "How do you make decisions?",
+      answers: [
+        {
+          arabic: "بالحدس",
+          english: "Intuition",
+        },
+        {
+          arabic: "بالتحليل",
+          english: "Analysis",
+        },
+        {
+          arabic: "بالتعاون",
+          english: "Collaboration",
+        },
+        {
+          arabic: "بالاستشارة",
+          english: "Consultation",
+        },
+      ],
+    },
+    {
+      arabic: "مالذي يحفزك؟",
+      english: "What motivates you?",
+      answers: [
+        {
+          arabic: "الإنجاز",
+          english: "Achievement",
+        },
+        {
+          arabic: "التقدير",
+          english: "Recognition",
+        },
+        {
+          arabic: "النمو",
+          english: "Growth",
+        },
+        {
+          arabic: "مساعدة الآخرين",
+          english: "Helping others",
+        },
+      ],
+    },
+    {
+      arabic: "كيف تتعامل مع النكسات؟",
+      english: "How do you handle setbacks?",
+      answers: [
+        {
+          arabic: "الثبات والمضي قدماً",
+          english: "Persevere",
+        },
+        {
+          arabic: "التأمل والتعلم",
+          english: "Reflect and learn",
+        },
+        {
+          arabic: "البحث عن الدعم",
+          english: "Seek support",
+        },
+        {
+          arabic: "التكيف والتغيير",
+          english: "Adapt and change",
+        },
+      ],
+    },
+    {
+      arabic: "هل أنت شخص صباحي أم مسائي؟",
+      english: "Are you a morning person or a night owl?",
+      answers: [
+        {
+          arabic: "صباحي",
+          english: "Morning person",
+        },
+        {
+          arabic: "أحب السهر",
+          english: "Night owl",
+        },
+        {
+          arabic: "صباحي و مسائي",
+          english: "Equally morning and night",
+        },
+        {
+          arabic: "يختلف حسب اليوم",
+          english: "Depending on the day",
+        },
+      ],
+    },
+    {
+      arabic: "كيف تفضل تعلم الأشياء؟",
+      english: "How do you prefer to learn new things?",
+      answers: [
+        {
+          arabic: "القراءة والدراسة بمفردي",
+          english: "Reading and studying on my own",
+        },
+        {
+          arabic: "حضور الدروس",
+          english: "Taking classes",
+        },
+        {
+          arabic: "التعلم من خلال التجربة",
+          english: "Hands-on experience",
+        },
+        {
+          arabic: "التعلم من الآخرين",
+          english: "Learning from others",
+        },
+      ],
+    },
+    {
+      arabic:
+        "مالذي يسعدك أكثر: تحقيق أهدافك أم مساعدة الآخرين على تحقيق أهدافهم؟",
+      english:
+        "Which do you find more fulfilling: achieving personal goals or helping others achieve theirs?",
+      answers: [
+        {
+          arabic: "تحقيق الأهداف الشخصية",
+          english: "Achieving personal goals",
+        },
+        {
+          arabic: "مساعدة الآخرين",
+          english: "Helping others",
+        },
+        {
+          arabic: "الأثنين معًا",
+          english: "Equally fulfilling",
+        },
+        {
+          arabic: "يعتمد على الوضع",
+          english: "Depends on the situation",
+        },
+      ],
+    },
   ],
 };

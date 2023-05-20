@@ -17,9 +17,9 @@ function createWindow() {
 
   let secWidth;
   let secHeight;
-  console.log("displays", screen.getAllDisplays());
-  // const secondaryDisplay = screen.getAllDisplays()[1];
-  const secondaryDisplay = null;
+  // console.log("displays", screen.getAllDisplays());
+  const secondaryDisplay = screen.getAllDisplays()[1];
+  // const secondaryDisplay = null;
 
   if (secondaryDisplay) {
     secWidth = secondaryDisplay.workAreaSize.width;
@@ -77,12 +77,13 @@ function createWindow() {
     titleBarStyle: "hidden",
   });
 
+  // onsorWindow.webContents.openDevTools();
+  // boothWindow.webContents.openDevTools();
+
   if (secondaryDisplay) {
     boothWindow.maximize();
     onsorWindow.maximize();
   } else {
-    onsorWindow.webContents.openDevTools();
-    boothWindow.webContents.openDevTools();
   }
 
   boothWindow.loadFile("booth.html");
@@ -128,6 +129,12 @@ app.whenReady().then(() => {
 
   ipcMain.on("get-generated-photo", (_, data) => {
     boothWindow.webContents.send("get-generated-photo");
+  });
+
+  ipcMain.on("show-views", (_, data) => {
+    console.log("current view", data);
+    onsorWindow.webContents.send("show-onsor-view", data);
+    boothWindow.webContents.send("show-booth-view", data);
   });
 
   createWindow();

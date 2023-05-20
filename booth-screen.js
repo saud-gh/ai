@@ -5,12 +5,21 @@ const createAnswersHtmlString = (answers) => {
   return answers.reduce((acc, answer, i) => {
     const answerStr = `
     <li class="answer">
-      <div class="answer__container" data-answerIndex="${i}">
-        <span>${answer.english}</span>
+      <div class="answer__number">${i + 1}</div>
+      <div class="answer__text">
+        <span class="">${answer.english}</span>
         <span class="arabic-text">${answer.arabic}</span>
       </div>
     </li>
     `;
+    // const answerStr = `
+    // <li class="answer">
+    //   <div class="answer__container" data-answerIndex="${i}">
+    //     <span>${answer.english}</span>
+    //     <span class="arabic-text">${answer.arabic}</span>
+    //   </div>
+    // </li>
+    // `;
     return acc + answerStr;
   }, "");
 };

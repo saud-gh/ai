@@ -13,15 +13,16 @@ const userInfoSlice = require("./data/slices/userInfo");
 const answersSlice = require("./data/slices/answers");
 const photosSlice = require("./data/slices/photos");
 const profileSlice = require("./data/slices/profile");
+const viewsSlice = require("./data/slices/views");
 
-// store.subscribe(() => console.log("New State:", store.getState()));
+store.subscribe(() => console.log("New State:", store.getState()));
 
 contextBridge.exposeInMainWorld("electronApi", {
   Questions: questions,
   /**
    * The view number of the first question
    */
-  FirstQuestionView: 3,
+  FirstQuestionView: 4,
   PhotoGenQuestionIndex: 4, // TODO: Choose a better name for this, please!
   BackendUrl: "http://192.168.1.180:5000", // TODO: Verify
   updateView: (store) => ipcRenderer.send("update-view", store),
@@ -30,7 +31,7 @@ contextBridge.exposeInMainWorld("electronApi", {
   startCountdown: (store) => ipcRenderer.send("countdown-started", store),
   resetBoothViews: () => ipcRenderer.send("reset-booth-views"),
   toArabicNumbers: (num) => {
-    // TODO: Convert numbers
+    // Convert numbers
     const arabicNumbers =
       "\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669";
     return new String(num).replace(/[0123456789]/g, (d) => {
@@ -57,20 +58,29 @@ contextBridge.exposeInMainWorld("electronApi", {
   setProfile: (profile) =>
     store.dispatch(profileSlice.actions.profile(profile)),
 
-  getState: () => store.getState(),
-
   getGeneratedPhoto: () => ipcRenderer.send("get-generated-photo"),
+
+  toNextView: () => {
+    // TODO: Refactor this by using toView(nextView)
+    const nextView = store.getState().views.currentView + 1;
+    toView(nextView);
+  },
+
+  toView: (view) => toView(view),
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector);
-    if (element) element.innerText = text;
-  };
+  // const replaceText = (selector, text) => {
+  //   const element = document.getElementById(selector);
+  //   if (element) element.innerText = text;
+  // };
 
-  for (const type of ["chrome", "node", "electron"]) {
-    replaceText(`${type}-version`, process.versions[type]);
-  }
+  // for (const type of ["chrome", "node", "electron"]) {
+  //   replaceText(`${type}-version`, process.versions[type]);
+  // }
+
+  // showViews();
+  console.log(window);
 
   ipcRenderer.on("update-view", updateCurrentView);
 
@@ -85,7 +95,50 @@ window.addEventListener("DOMContentLoaded", () => {
   ipcRenderer.on("generate-photo", generatePhoto);
 
   ipcRenderer.on("get-generated-photo", getGeneratedPhoto);
+
+  ipcRenderer.on("show-onsor-view", showOnsorView);
+  ipcRenderer.on("show-booth-view", showBoothView);
 });
+
+const toView = (view) => {
+  store.dispatch(viewsSlice.actions.currentView(view));
+  ipcRenderer.send("show-views", view);
+};
+
+const showOnsorView = () => {
+  const { currentView } = store.getState().views;
+
+  // Show onsor view
+  document.querySelectorAll(".onsorView").forEach((element) => {
+    if (element.classList.contains("show")) element.classList.remove("show");
+  });
+
+  const viewElement = document.querySelector(
+    `.onsorView[data-view="${currentView}"]`
+  );
+
+  console.log("-----onsor-----", viewElement);
+  if (!viewElement) return;
+
+  viewElement.classList.add("show");
+};
+
+const showBoothView = (_, currentView) => {
+  // const { currentView } = store.getState().views;
+  // Show booth view
+  document.querySelectorAll(".boothView").forEach((element) => {
+    if (element.classList.contains("show")) element.classList.remove("show");
+  });
+
+  const viewElement = document.querySelector(
+    `.boothView[data-view="${currentView}"]`
+  );
+
+  console.log("-----booth-----", viewElement);
+  if (!viewElement) return;
+
+  viewElement.classList.add("show");
+};
 
 const getBase64StringFromDataURL = (dataURL) =>
   dataURL.replace("data:", "").replace(/^.+,/, "");
@@ -148,9 +201,8 @@ const onCountdownEnded = (_, store_) => {
   }
 };
 
-const updateCurrentView = (_, store) => {
-  // console.log("store", store);
-  const { currentView } = store;
+const updateCurrentView = (_, store_) => {
+  const { currentView } = store.getState().views;
 
   document.querySelectorAll(".boothView").forEach((element) => {
     if (element.classList.contains("show")) element.classList.remove("show");
@@ -162,7 +214,6 @@ const updateCurrentView = (_, store) => {
 
   if (!viewElement) return;
 
-  // console.log(viewElement);
   viewElement.classList.add("show");
 };
 

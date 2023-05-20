@@ -2,6 +2,7 @@ const questions = window.electronApi.Questions;
 const toArabicNumbers = window.electronApi.toArabicNumbers;
 const url = window.electronApi.BackendUrl;
 
+const startJourneyBtn = document.getElementById("start-journey-btn");
 const captureBtn = document.getElementById("capture-btn");
 const toQuestionsBtn = document.getElementById("to-questions-btn");
 const toWebcamBtn = document.getElementById("to-webcam-btn");
@@ -15,7 +16,7 @@ const doneBtn = document.getElementById("done-btn");
 const maxViews = 12;
 
 const store = {
-  currentView: 1,
+  currentView: 2,
   currentQuestion: null,
   takenPhoto: "",
   generatedPhoto: "",
@@ -43,6 +44,10 @@ const showView = (viewNum) => {
   viewElement.classList.add("show");
 };
 
+startJourneyBtn.addEventListener("click", () => {
+  window.electronApi.toNextView();
+});
+
 userInfoForm.onsubmit = (e) => {
   e.preventDefault();
   for (const key in store.userInfo) {
@@ -56,9 +61,11 @@ userInfoForm.onsubmit = (e) => {
   window.electronApi.setUserInfo(userInfo);
   window.electronApi.openWebcam();
 
-  store.currentView = 2;
-  window.electronApi.updateView(store);
-  showView(store.currentView);
+  // store.currentView++;
+  // window.electronApi.updateView(store);
+  // showView(store.currentView);
+
+  window.electronApi.toNextView();
 };
 
 captureBtn.addEventListener("click", () => {
@@ -69,16 +76,19 @@ captureBtn.addEventListener("click", () => {
 });
 
 toQuestionsBtn.addEventListener("click", () => {
-  store.currentView = 3;
-  window.electronApi.updateView(store);
-  showView(store.currentView);
+  window.electronApi.toNextView();
+  // store.currentView = 3;
+  // window.electronApi.updateView(store);
+  // showView(store.currentView);
 });
 
 doneBtn.addEventListener("click", () => {
   // Go back to first view
-  store.currentView = 1;
-  window.electronApi.updateView(store);
-  showView(store.currentView);
+  // store.currentView = 1;
+  // window.electronApi.updateView(store);
+  // showView(store.currentView);
+
+  window.electronApi.toView(1);
 
   // Reset store
   resetStore();
@@ -170,7 +180,7 @@ const renderAnswerButtons = () => {
 
         window.electronApi.setAnswer({ questionIndex: qIndex, answerIndex });
 
-        console.log("taken photo", window.electronApi.getState());
+        // console.log("taken photo", window.electronApi.getState());
         if (isLastQuestion) {
           console.log("This is last question, store", store);
           // renderGeneratedPhoto(store);
@@ -188,9 +198,10 @@ const renderAnswerButtons = () => {
           } else {
           }
         }
-        store.currentView = viewNum + 1;
-        window.electronApi.updateView(store);
-        showView(store.currentView);
+        window.electronApi.toNextView();
+        // store.currentView = viewNum + 1;
+        // window.electronApi.updateView(store);
+        // showView(store.currentView);
       });
     }
     onsorViewsContainer.insertBefore(view, lastView);
@@ -227,6 +238,6 @@ const resetViews = () => {
 };
 
 resetStore();
-resetViews();
+// resetViews();
 renderAnswerButtons();
 // TODO: Set form inputs to empty after experience ends
