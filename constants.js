@@ -22,7 +22,7 @@ const question = {
 };
 
 module.exports = {
-  url: "http://192.168.1.180:5000",
+  url: "http://192.168.1.2:5000",
   questions: [
     {
       arabic: "أي من العناصر الأربعة تجذبك أكثر؟",
@@ -426,8 +426,8 @@ module.exports = {
       english: "How do you prefer to learn new things?",
       answers: [
         {
-          arabic: "القراءة والدراسة بمفردي",
-          english: "Reading and studying on my own",
+          arabic: "الدراسة بمفردي",
+          english: "Studying on my own",
         },
         {
           arabic: "حضور الدروس",

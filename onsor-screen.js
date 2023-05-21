@@ -7,6 +7,8 @@ const captureBtn = document.getElementById("capture-btn");
 const toQuestionsBtn = document.getElementById("to-questions-btn");
 const toWebcamBtn = document.getElementById("to-webcam-btn");
 
+const genderInput = document.getElementById("gender-input");
+
 const userInfoForm = document.getElementById("user-info-form");
 
 const onsorViewsContainer = document.getElementById("onsor-views-container");
@@ -48,6 +50,65 @@ startJourneyBtn.addEventListener("click", () => {
   window.electronApi.toNextView();
 });
 
+const userInfoKeys = ["firstName", "lastName", "email", "gender"];
+
+console.log("form elements", userInfoForm.elements);
+
+const maleOption = document.querySelector(
+  `.genderOption__circle[data-gender="male"]`
+);
+const femaleOption = document.querySelector(
+  `.genderOption__circle[data-gender="female"]`
+);
+
+maleOption.addEventListener("click", (e) => {
+  femaleOption.classList.remove("selected");
+  maleOption.classList.add("selected");
+
+  genderInput.value = "male";
+  genderInput.dispatchEvent(new Event("input"));
+});
+
+femaleOption.addEventListener("click", (e) => {
+  maleOption.classList.remove("selected");
+  femaleOption.classList.add("selected");
+
+  genderInput.value = "female";
+
+  genderInput.dispatchEvent(new Event("input"));
+});
+
+userInfoKeys.forEach((key) => {
+  const formElement = userInfoForm.elements[key];
+  formElement.addEventListener("input", (e) => {
+    console.log(e.target.name, "changed--->", e.target.value);
+    const userInfoValues = userInfoKeys.map((key) => {
+      return {
+        key,
+        value: userInfoForm.elements[key].value,
+      };
+    });
+
+    console.log("values", userInfoValues);
+
+    const valid = userInfoValues.every((kvPair) => {
+      return (
+        kvPair.value !== "" &&
+        kvPair.value !== null &&
+        kvPair.value !== undefined
+      );
+    });
+
+    console.log("VALID?", valid);
+
+    if (valid) {
+      toWebcamBtn.disabled = null;
+    } else {
+      toWebcamBtn.disabled = true;
+    }
+  });
+});
+
 userInfoForm.onsubmit = (e) => {
   e.preventDefault();
   for (const key in store.userInfo) {
@@ -55,7 +116,7 @@ userInfoForm.onsubmit = (e) => {
   }
   console.log("user info", store.userInfo);
   const userInfo = {};
-  for (const key of ["firstName", "lastName", "email"]) {
+  for (const key of userInfoKeys) {
     userInfo[key] = e.target.elements[key].value;
   }
   window.electronApi.setUserInfo(userInfo);
@@ -94,7 +155,7 @@ doneBtn.addEventListener("click", () => {
   resetStore();
 
   // Reset views
-  resetViews();
+  // resetViews();
 });
 
 const generatePhoto = async (store) => {

@@ -14,7 +14,7 @@
           font-src 'self' https://fonts.gstatic.com;
           style-src 'self' https://fonts.googleapis.com;
           img-src 'self' data:;
-          connect-src 'self' http://192.168.1.180:5000;"
+          connect-src 'self' http://192.168.1.2:5000;"
     />
     <!-- <link
       href="https://fonts.googleapis.com/css?family=Tajawal&display=swap"
@@ -191,13 +191,15 @@
             </h2>
           </div>
           <div class="generatedPhoto">
+            <div id="photo-placeholder" class="show"></div>
             <img
               id="generated-photo"
               class="generatedPhoto__img"
               alt="Generated Photo"
             />
           </div>
-          <div>
+          <div id="profile"></div>
+          <!-- <div>
             <div class="originalPhoto">
               <img
                 id="original-photo"
@@ -206,7 +208,7 @@
               />
             </div>
             <div id="profile"></div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

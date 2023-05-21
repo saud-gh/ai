@@ -10,7 +10,7 @@
           script-src 'self'; 
           font-src 'self' https://fonts.gstatic.com;
           style-src 'self' https://fonts.googleapis.com;
-          connect-src 'self' http://192.168.1.180:5000;"
+          connect-src 'self' http://192.168.1.2:5000;"
     />
     <link href="./styles.css" rel="stylesheet" />
     <title>Onsor Screen</title>
@@ -69,19 +69,25 @@
                   type="text"
                   placeholder="First Name                                                                                                        الاسم"
                   name="firstName"
+                  required
+                  value="Saud"
                 />
                 <input
                   type="text"
                   placeholder="Last Name                                                                                                      القبيلة"
                   name="lastName"
+                  required
+                  value="Al Alawi"
                 />
                 <input
                   type="email"
                   placeholder="Email                                                                                                البريد الالكتروني"
                   name="email"
+                  required
+                  value="saud@onsor.com"
                 />
               </div>
-              <input type="hidden" name="gender" />
+              <input id="gender-input" type="hidden" name="gender" required />
               <div class="genderOptions">
                 <div class="genderOption">
                   <div class="genderOption__text male">
@@ -91,8 +97,6 @@
                   <div class="genderOption__circle boy" data-gender="male">
                     <svg
                       class="gender-svg"
-                      width="51"
-                      height="51"
                       viewBox="0 0 51 51"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -112,9 +116,7 @@
                   </div>
                   <div class="genderOption__circle girl" data-gender="female">
                     <svg
-                      width="53"
                       class="gender-svg"
-                      height="67"
                       viewBox="0 0 53 67"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +135,12 @@
                     <h1 class="arabic-text">استمر</h1>
                     <h1>Keep Going</h1>
                   </div>
-                  <button class="btn nextBtn" type="submit">
+                  <button
+                    id="to-webcam-btn"
+                    class="btn nextBtn"
+                    type="submit"
+                    disabled
+                  >
                     <svg
                       class="btn__icon"
                       class="rockt-svg"
@@ -187,7 +194,7 @@
             <div class="actionsContainer">
               <!-- <div class="circle-container"> -->
               <div class="circleContainer">
-                <button id="capture-btn" class="circle btn">
+                <button id="capture-btn" class="btn">
                   <svg
                     class="btn__icon"
                     viewBox="0 0 101 85"
@@ -210,7 +217,7 @@
                   <h1 class="arabic-text">إنطلق</h1>
                   <h1>Let's Go</h1>
                 </div>
-                <button id="to-questions-btn" class="btn">
+                <button id="to-questions-btn" class="btn" disabled>
                   <svg
                     class="btn__icon"
                     viewBox="0 0 121 120"
@@ -225,6 +232,9 @@
                 </button>
               </div>
             </div>
+          </div>
+          <div class="onsorLogoContainer">
+            <img src="./src/assets/images/ONSOR_LOGO_WHITE 2.png" />
           </div>
           <!-- <button id="capture-btn" class="btn">
               <svg

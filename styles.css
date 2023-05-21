@@ -21,6 +21,9 @@ body, html{
 .screenContainer--booth{
     background-image: url(./src/assets/images/bg_big\ 1.png);
     background-size: cover;
+    background-repeat: no-repeat;
+    /* background-position: 0 0; */
+    background-position: center;
 }
 
 .arabic-text{
@@ -29,7 +32,7 @@ body, html{
 
 .viewsContainer{
     margin: 0 auto;
-    height: 100%;
+    height: 100vh;
     overflow: hidden;
 }
 
@@ -55,7 +58,8 @@ body, html{
 }
 
 .logo{
-    margin-bottom: 60px;
+    margin-bottom: 120px;
+    padding: 0 60px;
 }
 
 .title h1, .title h2{
@@ -80,7 +84,7 @@ body, html{
 }
 
 .instructions{
-    font-size: 34px;
+    font-size: 38px;
 }
 
 .headings{
@@ -116,6 +120,7 @@ body, html{
     top: 0;
     left: 0;
     z-index: 10;
+    /* aspect-ratio: 1 / 1; */
 }
 #webcam-view.show{
     display: block;
@@ -242,23 +247,32 @@ body, html{
 .generatedPhoto{
     display: flex;
     justify-content: center;
-    /* margin-top: 30px; */
+    margin-top: 80px;
+}
+
+#photo-placeholder, #generated-photo{
+    border-radius: 24px;
+    font-size: 36px;
+    aspect-ratio: 1 / 1;
+    background: rgba(20, 18, 24, 0.5);
+}
+
+#photo-placeholder{
+    display: none;
+    width: 100%;
+}
+#photo-placeholder.show{
+    display: block;
 }
 
 #generated-photo{
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    /* height: 600px; TODO: Change to auto once photo generation is ready */
-    /* width: 100%; */
     max-width: 100%;
-    aspect-ratio: 1 / 1;
-    background-color: #ffffff;
-    color: #000109;
     text-align: center;
-    border: none;
-    border-radius: 24px;
-    font-size: 36px;
+    display: none;
+}
+
+#generated-photo.show{
+    display: block;
 }
 
 .originalPhoto{
@@ -296,6 +310,11 @@ body, html{
 }
 
 .onsorView__btnContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.onsorLogoContainer{
     display: flex;
     justify-content: center;
 }
@@ -363,6 +382,10 @@ body, html{
 
   .btn__icon{
     width: 81px;
+  }
+
+  .btn:disabled .btn__icon path{
+    fill: #ffffff22
   }
   
   .circleContainer {
@@ -463,13 +486,17 @@ body, html{
   .genderOption__circle {
     background: #eef2fa;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
     /* margin-left: 3rem;
     margin-right: 3rem; */
+  }
+
+  .genderOption__circle svg{
+    width: 40px;
   }
 
   .genderOption__text{

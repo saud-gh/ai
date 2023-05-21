@@ -132,9 +132,14 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on("show-views", (_, data) => {
-    console.log("current view", data);
+    console.log("current view =", data);
     onsorWindow.webContents.send("show-onsor-view", data);
     boothWindow.webContents.send("show-booth-view", data);
+  });
+
+  ipcMain.on("reset", (_, data) => {
+    onsorWindow.webContents.send("init-onsor");
+    boothWindow.webContents.send("init-booth");
   });
 
   createWindow();

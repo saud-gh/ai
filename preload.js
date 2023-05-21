@@ -67,20 +67,14 @@ contextBridge.exposeInMainWorld("electronApi", {
   },
 
   toView: (view) => toView(view),
+  reset: () => {
+    // TODO: Reset state
+    ipcRenderer.send("reset");
+  },
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-  // const replaceText = (selector, text) => {
-  //   const element = document.getElementById(selector);
-  //   if (element) element.innerText = text;
-  // };
-
-  // for (const type of ["chrome", "node", "electron"]) {
-  //   replaceText(`${type}-version`, process.versions[type]);
-  // }
-
-  // showViews();
-  console.log(window);
+  toView(store.getState().views.currentView);
 
   ipcRenderer.on("update-view", updateCurrentView);
 
@@ -98,11 +92,35 @@ window.addEventListener("DOMContentLoaded", () => {
 
   ipcRenderer.on("show-onsor-view", showOnsorView);
   ipcRenderer.on("show-booth-view", showBoothView);
+
+  ipcRenderer.on("init-onsor", initOnsor);
+  ipcRenderer.on("init-booth", initBooth);
 });
 
 const toView = (view) => {
   store.dispatch(viewsSlice.actions.currentView(view));
   ipcRenderer.send("show-views", view);
+};
+
+const initOnsor = () => {
+  // Reset form
+  const userInfoForm = document.getElementById("user-info-form");
+
+  // for (const key of ["firstName", "lastName", "email", "gender"]) {
+  // }
+  const toQuestionsBtn = document.getElementById("to-questions-btn");
+};
+
+const initBooth = () => {
+  const generatedPhoto = document.getElementById("generated-photo");
+  generatedPhoto.src = "";
+  generatedPhoto.classList.remove("show");
+
+  const placeholder = document.getElementById("photo-placeholder");
+  placeholder.classList.add("show");
+
+  const profile = document.getElementById("profile");
+  profile.innerText = "";
 };
 
 const showOnsorView = () => {
@@ -117,7 +135,7 @@ const showOnsorView = () => {
     `.onsorView[data-view="${currentView}"]`
   );
 
-  console.log("-----onsor-----", viewElement);
+  // console.log("-----onsor-----", viewElement);
   if (!viewElement) return;
 
   viewElement.classList.add("show");
@@ -145,27 +163,36 @@ const getBase64StringFromDataURL = (dataURL) =>
 
 const getGeneratedPhoto = async () => {
   // TODO: Add profile
-  const profile = document.getElementById("profile");
-  profile.innerText = store.getState().profile;
+  // const profile = document.getElementById("profile");
+  // profile.innerText = store.getState().profile;
 
   // TODO: Send get requests for at least 1 minute
-
+  const placeholder = document.getElementById("photo-placeholder");
   setTimeout(async () => {
     console.log("1 MINUTE OVERRRR!!!!");
     const { generatedPhotoId } = store.getState().photos;
-    const res = await fetch(`${url}/generated_image/${generatedPhotoId}`);
-    const blob = await res.blob();
+    try {
+      const res = await fetch(`${url}/generated_image/${generatedPhotoId}`);
+      const blob = await res.blob();
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = getBase64StringFromDataURL(reader.result);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result) {
+          const base64 = getBase64StringFromDataURL(reader.result);
 
-      const generatedPhoto = document.getElementById("generated-photo");
-      generatedPhoto.src = "data:image/jpeg;base64," + base64;
-      // TODO: Remove placeholder/loading screen
-    };
-    reader.readAsDataURL(blob);
-  }, 60 * 1000);
+          const generatedPhoto = document.getElementById("generated-photo");
+          generatedPhoto.classList.add("show");
+          generatedPhoto.src = "data:image/jpeg;base64," + base64;
+          // TODO: Remove placeholder/loading screen
+          placeholder.classList.remove("show");
+          placeholder.innerText = "";
+        }
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      placeholder.innerText = "Image generation failed! Try again!";
+    }
+  }, 15 * 1000);
 };
 
 const resetBoothViews = () => {
