@@ -268,7 +268,7 @@ module.exports = {
       ],
     },
     {
-      arabic: "", // TODO: Add
+      arabic: "ما هو أسلوب التواصل المفضل لديك؟", // TODO: Add
       english: "What is your preferred communication style?",
       answers: [
         {

@@ -15,7 +15,7 @@ const photosSlice = require("./data/slices/photos");
 const profileSlice = require("./data/slices/profile");
 const viewsSlice = require("./data/slices/views");
 
-store.subscribe(() => console.log("New State:", store.getState()));
+// store.subscribe(() => console.log("New State:", store.getState()));
 
 contextBridge.exposeInMainWorld("electronApi", {
   Questions: questions,
@@ -69,6 +69,14 @@ contextBridge.exposeInMainWorld("electronApi", {
   toView: (view) => toView(view),
   reset: () => {
     // TODO: Reset state
+    store.dispatch(
+      userInfoSlice.actions.setUserInfo({
+        firstName: "",
+        lastName: "",
+        email: "",
+        gender: "",
+      })
+    );
     ipcRenderer.send("reset");
   },
 });
@@ -84,7 +92,7 @@ window.addEventListener("DOMContentLoaded", () => {
   ipcRenderer.on("countdown-started", startCountdown);
   ipcRenderer.on("countdown-ended", onCountdownEnded);
 
-  ipcRenderer.on("reset-booth-views", resetBoothViews);
+  // ipcRenderer.on("reset-booth-views", resetBoothViews);
 
   ipcRenderer.on("generate-photo", generatePhoto);
 
@@ -106,12 +114,26 @@ const initOnsor = () => {
   // Reset form
   const userInfoForm = document.getElementById("user-info-form");
 
-  // for (const key of ["firstName", "lastName", "email", "gender"]) {
-  // }
+  for (const key of ["firstName", "lastName", "email", "gender"]) {
+    userInfoForm.elements[key].value = "";
+  }
+  console.log("form elements", userInfoForm.elements);
   const toQuestionsBtn = document.getElementById("to-questions-btn");
+  toQuestionsBtn.disabled = true;
+
+  const toWebcamBtn = document.getElementById("to-webcam-btn");
+  toWebcamBtn.disabled = true;
+
+  const genderOptions = document.querySelectorAll(".genderOption__circle");
+
+  genderOptions.forEach((option) => {
+    console.log(option.classList);
+    option.classList.remove("selected");
+  });
 };
 
 const initBooth = () => {
+  // Reset UI
   const generatedPhoto = document.getElementById("generated-photo");
   generatedPhoto.src = "";
   generatedPhoto.classList.remove("show");
@@ -273,8 +295,8 @@ const savePhoto = (_, store_) => {
   // Check if answer button views are rendered
 
   // TODO: Remove the following after backend is ready
-  const originalPhoto = document.getElementById("original-photo");
-  originalPhoto.src = photo;
+  // const originalPhoto = document.getElementById("original-photo");
+  // originalPhoto.src = photo;
 };
 
 const generatePhoto = async (_, { answers: answersObj, userInfo }) => {

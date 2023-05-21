@@ -150,9 +150,10 @@ doneBtn.addEventListener("click", () => {
   // showView(store.currentView);
 
   window.electronApi.toView(1);
+  window.electronApi.reset();
 
   // Reset store
-  resetStore();
+  // resetStore();
 
   // Reset views
   // resetViews();
@@ -298,7 +299,7 @@ const resetViews = () => {
   reloadIcon.classList.remove("show");
 };
 
-resetStore();
+// resetStore();
 // resetViews();
 renderAnswerButtons();
 // TODO: Set form inputs to empty after experience ends

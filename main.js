@@ -78,7 +78,7 @@ function createWindow() {
   });
 
   // onsorWindow.webContents.openDevTools();
-  // boothWindow.webContents.openDevTools();
+  boothWindow.webContents.openDevTools();
 
   if (secondaryDisplay) {
     boothWindow.maximize();
@@ -132,7 +132,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on("show-views", (_, data) => {
-    console.log("current view =", data);
+    // console.log("current view =", data);s
     onsorWindow.webContents.send("show-onsor-view", data);
     boothWindow.webContents.send("show-booth-view", data);
   });

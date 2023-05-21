@@ -262,7 +262,9 @@ body, html{
     width: 100%;
 }
 #photo-placeholder.show{
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #generated-photo{
@@ -676,9 +678,9 @@ body, html{
     display: block;
 } */
 
-#capture-btn:disabled svg path{
+/* #capture-btn:disabled svg path{
     fill: #00010933;
-}
+} */
 
 /* #to-webcam-btn, #to-questions-btn, #done-btn{
     width: 360px;
