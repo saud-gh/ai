@@ -190,15 +190,31 @@
               We're excited to meet you, our friend! Share your photo with us!
             </h2>
           </div>
-          <div class="generatedPhoto">
-            <div id="photo-placeholder" class="show"></div>
+          <div class="generatedPhoto" style="margin-bottom: 160px">
+            <div id="photo-placeholder" class="show">
+              <img
+                id="loading-img"
+                src="./src/assets/images/loader-white.gif"
+              />
+              <span id="failure-msg" style="display: none"
+                >Image generation failed! Try again!</span
+              >
+            </div>
             <img
               id="generated-photo"
               class="generatedPhoto__img"
               alt="Generated Photo"
             />
           </div>
-          <div id="profile"></div>
+          <!-- <div
+            style="display: flex; justify-content: center; min-height: 500px"
+          >
+            <img
+              src="./src/assets/images/ONSOR_LOGO_WHITE 1.png"
+              alt="Onsor Technologies"
+            />
+          </div> -->
+          <!-- <div id="profile"></div> -->
           <!-- <div>
             <div class="originalPhoto">
               <img

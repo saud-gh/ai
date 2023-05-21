@@ -140,9 +140,14 @@ const initBooth = () => {
 
   const placeholder = document.getElementById("photo-placeholder");
   placeholder.classList.add("show");
+  const failureMsg = document.getElementById("failure-msg");
 
-  const profile = document.getElementById("profile");
-  profile.innerText = "";
+  const loadingImg = document.getElementById("loading-img");
+  console.log("LOADING at initBooth", loadingImg);
+  loadingImg.style.display = "block";
+  failureMsg.style.display = "none";
+  // const profile = document.getElementById("profile");
+  // profile.innerText = "";
 };
 
 const showOnsorView = () => {
@@ -188,8 +193,15 @@ const getGeneratedPhoto = async () => {
   // const profile = document.getElementById("profile");
   // profile.innerText = store.getState().profile;
 
-  // TODO: Send get requests for at least 1 minute
+  // TODO: Send get requests for at least 15 seconds
   const placeholder = document.getElementById("photo-placeholder");
+  const loadingImg = document.getElementById("loading-img");
+  const failureMsg = document.getElementById("failure-msg");
+
+  console.log("loading", placeholder);
+  loadingImg.style.display = "block";
+  failureMsg.style.display = "none";
+
   setTimeout(async () => {
     console.log("1 MINUTE OVERRRR!!!!");
     const { generatedPhotoId } = store.getState().photos;
@@ -207,12 +219,16 @@ const getGeneratedPhoto = async () => {
           generatedPhoto.src = "data:image/jpeg;base64," + base64;
           // TODO: Remove placeholder/loading screen
           placeholder.classList.remove("show");
-          placeholder.innerText = "";
+          // placeholder.innerText = "";
+          loadingImg.style.display = "none";
+          failureMsg.style.display = "none";
         }
       };
       reader.readAsDataURL(blob);
     } catch (error) {
-      placeholder.innerText = "Image generation failed! Try again!";
+      failureMsg.style.display = "block";
+      loadingImg.style.display = "none";
+      // placeholder.innerText = "Image generation failed! Try again!";
     }
   }, 15 * 1000);
 };

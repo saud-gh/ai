@@ -55,7 +55,19 @@ body, html{
 
 .boothView.show{
     display: block;
+    /* opacity: 0; */
+    animation: fadeIn 0.7s ease-in-out; 
 }
+
+@keyframes fadeIn {  
+    from {  
+        opacity:0;  
+    }  
+ 
+    to {  
+        opacity:1;  
+    }  
+ }
 
 .logo{
     margin-bottom: 120px;
@@ -163,6 +175,8 @@ body, html{
     from {box-shadow: 0;}
     to {box-shadow: inset 0 0 0 300px #fff;}
 }
+
+
 
 #photo-canvas{
     display: none;
@@ -309,6 +323,7 @@ body, html{
 }
 .onsorView.show{
     display: block;
+    animation: fadeIn 1s ease-in-out; 
 }
 
 .onsorView__btnContainer{
@@ -420,7 +435,7 @@ body, html{
   #user-info-form {
     /* height: 37rem; */
     width: 50%;
-    background: rgba(13, 33, 63, 0.8);
+    background: rgba(13, 33, 63, 0.5);
     /* opacity: 80%; */
     /* position: absolute;
     transform: translate(-50%, -50%);
@@ -429,29 +444,22 @@ body, html{
     border-radius: 4rem;
     /* backdrop-filter: blur(10px); */
     position: relative;
-    border: 3px solid transparent;
+    border: 2px solid rgba(13, 33, 63, 0.8);
     /* box-shadow: 0 0 40px rgba(8, 7, 16, 0.6); */
     padding: 50px 35px;
-    background-clip: padding-box;
+    
+    
   }
-  #user-info-form::before{
+  /* #user-info-form::before{
     content: "";
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
-    /* width: 100%;
-    height: 100%; */
     z-index: -1;
     border-radius: inherit;
     margin: -10px;
     background: radial-gradient(103.76% 1876.91% at 3.76% 21.99%, #17FBDC 7.01%, rgba(13, 33, 63, 0.5) 45.02%, #B63AAD 81.45%);
-  }
-  #user-info-form * {
-    /* font-family: "Poppins", sans-serif; */
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    outline: none;
-    border: none;
-  }
+  } */
+  
   #user-info-form input {
     display: block;
     height: 60px;
@@ -578,7 +586,17 @@ body, html{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+    margin-bottom: 80px;
+    /* border-image-source: linear-gradient(to left, #743ad5, #d53a9d); */
+    /* background: linear-gradient(#302f2f, #302f2f) padding-box,
+          radial-gradient(
+              farthest-corner at 50% 50%,
+              #00c9a7,
+              #845ec2,
+              #0d213f
+            )
+            border-box;
+        border-image-slice: 1; */
   }
   .actionsContainer * {
     /* font-family: "Poppins", sans-serif; */
